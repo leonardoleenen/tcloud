@@ -1,0 +1,99 @@
+{
+  "1DWWF2": {
+    "data": {
+      "socios": [
+        {
+          "id":"1",
+          "id_image": "",
+          "area": {
+            "x-pos": 32314531,
+            "y-pos": 90053244,
+            "width": 90,
+            "height": 123
+          },
+          "text": "Martin Pablo Ridolf  argentino, nacido el 08 de Junio de 1987, DNI N 33.010.870, casado de profesion comerciante"
+        },
+        {
+          "id":"2",
+          "id_image": "",
+          "area": {
+            "x-pos": 32314531,
+            "y-pos": 90053244,
+            "width": 90,
+            "height": 123
+          },
+          "text": "Franco Gabriel Ridolfo, argentino, nacido el 17 de febrero de 1.986, DNI N 32.191.416, soltero de profesion comerciante"
+        },
+        {
+          "id":"3",
+          "id_image": "",
+          "area": {
+            "x-pos": 32314531,
+            "y-pos": 90053244,
+            "width": 90,
+            "height": 123
+          },
+          "text": "Fernando Martin Otalora, argentino, nacido el 26 de enero de 1.986, DNI N 32.166.110, soltero de profesion comerciante"
+        },
+        {
+          "id":"4",
+          "id_image": "",
+          "area": {
+            "x-pos": 32314531,
+            "y-pos": 90053244,
+            "width": 90,
+            "height": 123
+          },
+          "text": "Daniel Agramunt, argentino, nacido el 14 de abril de 1.989, DNI N 34.394.332, soltero de profesion comerciante"
+        },
+        {
+          "id":"5",
+          "id_image": "",
+          "area": {
+            "x-pos": 32314531,
+            "y-pos": 90053244,
+            "width": 90,
+            "height": 123
+          },
+          "text": "Enrico Tessarolo, argentino, nacido el 04 de julio de 1.985, DNI N 31.787.341, soltero de profesion comerciante"
+        },
+        {
+          "id":"6",
+          "id_image": "",
+          "area": {
+            "x-pos": 32314531,
+            "y-pos": 90053244,
+            "width": 90,
+            "height": 123
+          },
+          "text": "Maria Sol Chamut, argentina, nacido el 29 de diciembre de 1.985, DNI N 32.218.997, soltero de profesion comerciante"
+        },
+        {
+          "id":"7",
+          "id_image": "",
+          "area": {
+            "x-pos": 32314531,
+            "y-pos": 90053244,
+            "width": 90,
+            "height": 123
+          },
+          "text": "Bruno Ceroi, argentino, nacido el 23 de agosto de 1.988, DNI N 34.015.761, soltero de profesion comerciante"
+        }
+      ],
+      "razon_social": [
+        {
+          "id":"8",
+          "id_image": "",
+          "area": {
+            "x-pos": 32314531,
+            "y-pos": 90053244,
+            "width": 90,
+            "height": 123
+          },
+          "text": "Great Meals S.A"
+        }
+      ],
+      "capital_social": []
+    }
+  }
+}

@@ -19,12 +19,11 @@ export default (props:Props) => {
     <div className='py-4  ml-2 subtitle bg-white rounded '>{props.label}</div>
 
     {props.values.map((p:Properties) => (
-       <div className= "bg-white ml-2 row">
+       <div className= "bg-white ml-2 row" key={p.key}>
        <p className="bg-white text-gray-600"> {p.key}</p>
        <p  className="bg-white text-gray-600"> {p.value} </p>
      </div>
     ))}
-   
    
     <p className="bg-white rounded py-2"> </p>
  

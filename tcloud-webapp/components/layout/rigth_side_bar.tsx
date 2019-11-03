@@ -1,5 +1,5 @@
 import React from 'react';
 
 export default () => {
-    return <div>rigth bar</div>
+    return <div  className="bg-indigo-100">rigth bar</div>
 }

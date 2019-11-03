@@ -1,12 +1,14 @@
 import React from "react";
 
-export default () => {
+export default (props) => {
   return <div className= "searchBar">
-    search 
+    {props.children} 
     <style jsx>
       {`
         .searchBar {
-          height: 48px;
+          display:grid;
+          grid-template-columns: repeat(20,1fr);
+          height: 58px;
           background-color: white;
         }
       `}
