@@ -10,13 +10,13 @@ export default () => {
       <div onClick={ () => collapase(!isExpanded)}  className='expandIcon bg-gray-200 rounded-lg'>{isExpanded ? <CollapseIcon/> :<ExpandIcon/>}</div>
     </header>
     {isExpanded ? <div><ul>
-      <li className='text-sm text-gray-600 '>DANIEL MENDOZA CANO, paraguayo, mayor de edad, nacido el 03 de Ene</li>
+      <li className='text-sm text-gray-600 border-b py-2'>DANIEL MENDOZA CANO, paraguayo, mayor de edad, nacido el 03 de Ene</li>
     </ul>
     <ul>
-    <li className='text-sm text-gray-600 '>DANIEL MENDOZA CANO, paraguayo, mayor de edad, nacido el 03 de Ene</li>
+    <li className='text-sm text-gray-600  border-b py-2'>DANIEL MENDOZA CANO, paraguayo, mayor de edad, nacido el 03 de Ene</li>
   </ul>
   <ul>
-  <li className='text-sm text-gray-600 '>DANIEL MENDOZA CANO, paraguayo, mayor de edad, nacido el 03 de Ene</li>
+  <li className='text-sm text-gray-600  border-b py-2'>DANIEL MENDOZA CANO, paraguayo, mayor de edad, nacido el 03 de Ene</li>
 </ul> </div>: ''}
 
     <style jsx>
