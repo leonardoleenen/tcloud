@@ -4,8 +4,9 @@ import LeftSideBar from '../../components/layout/left_side_bar';
 import RightSideBar from '../../components/layout/rigth_side_bar';
 import DocumentArea from '../../components/layout/document_area';
 import InfoCard from '../../components/info_card';
-import ButtonNewTest from '../../components/button_new_test';
 import ButtonSearch from '../../components/button_search';
+import TagsCard from  '../../components/tags_card';
+
 import { useRouter } from 'next/router'
 import {useState, useEffect} from 'react';
 import {dataProvider} from '../../service/index';
@@ -34,18 +35,18 @@ export default () => {
 
   //window['e']  = entities
 
-  entities[Object.keys(entities)[0]]
+  console.log(entities[Object.keys(entities)[0]])
 
 
   return (  
     <div className="container" >
       <SearchBar>
-        <ButtonNewTest />
         <ButtonSearch />
       </SearchBar>
       <div className="workspace">
         <LeftSideBar>
           <InfoCard label="Entidades detectadas" values={[{ key: "Socios", value: "3" }, { key: "Razón Social", value: "1" }]} />
+          <TagsCard/> 
         </LeftSideBar>
         <DocumentArea />
         <RightSideBar />
