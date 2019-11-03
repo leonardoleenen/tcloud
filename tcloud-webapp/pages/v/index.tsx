@@ -6,6 +6,7 @@ import DocumentArea from '../../components/layout/document_area';
 import InfoCard from '../../components/info_card';
 import ButtonSearch from '../../components/button_search';
 import TagsCard from  '../../components/tags_card';
+import EntityCardDetail from '../../components/entity_card_detail';
 
 import { useRouter } from 'next/router'
 import {useState, useEffect} from 'react';
@@ -47,6 +48,8 @@ export default () => {
         <LeftSideBar>
           <InfoCard label="Entidades detectadas" values={[{ key: "Socios", value: "3" }, { key: "Razón Social", value: "1" }]} />
           <TagsCard/> 
+          <EntityCardDetail/>
+
         </LeftSideBar>
         <DocumentArea />
         <RightSideBar />
