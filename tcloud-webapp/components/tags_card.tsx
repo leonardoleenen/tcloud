@@ -1,16 +1,18 @@
 import React from 'react';
 import ToggleButton from '../components/toggle_button'
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import {updateEntityDetailList} from '../redux/actions/document_viewer'; 
 
 
 export default () => {
 
   const rawEntities = useSelector( state => state.documentViewer.document.data)
-  
+  const dispatch = useDispatch()
+
   const values = []
 
   const selectItem = (id: string) => {
-    console.log(id)
+    dispatch(updateEntityDetailList(id))
   }
 
   Object.keys(rawEntities).map( (entityName: string) => {
