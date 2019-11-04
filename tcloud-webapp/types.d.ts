@@ -2,3 +2,4 @@ interface String {
   capitalize(): string
 }
 
+

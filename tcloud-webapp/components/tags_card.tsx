@@ -3,6 +3,9 @@ import ToggleButton from '../components/toggle_button'
 import {useSelector, useDispatch} from 'react-redux';
 import {updateEntityDetailList} from '../redux/actions/document_viewer'; 
 
+const colors = ['gray' , 'red', 'orange', 'yellow', 'green', 'teal', 'blue', 'indigo', 'purple', 'pink']
+
+
 
 export default () => {
 
@@ -26,7 +29,7 @@ export default () => {
   return <div className="mainContainer p-2 m-2 bg-white rounded-lg"> 
     <label className="subtitle mb-4">Marcadores</label>
     <article> 
-      {values.map( (e:any) => <ToggleButton callBackFunc={selectItem} value={e.description} color="indigo" id={e.key} key={e.key} />) }
+      {values.map( (e:any, index: number) => <ToggleButton callBackFunc={selectItem} value={e.description} color={colors[index]} id={e.key} key={e.key} />) }
     </article>
 
     <style jsx>
