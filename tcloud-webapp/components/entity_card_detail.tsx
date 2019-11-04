@@ -12,10 +12,11 @@ interface Props {
 
 
 const renderRows = (isExpanded, values: []) => {
+ 
   if (!isExpanded)
     return
 
-  return (<div>{values.map((e: any) => <ul>
+  return (<div >{values.map((e: any) => <ul>
     <li key={e.id} className='text-sm text-gray-600 border-b py-2'> {e.text}</li>
   </ul>)}
 
