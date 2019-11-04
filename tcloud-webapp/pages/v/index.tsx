@@ -37,12 +37,9 @@ export default () => {
 
   }, []) 
 
-  //window['e']  = entities
-
-  // console.log(entities[Object.keys(entities)[0]])
-
+ 
   const document = useSelector(state => state.documentViewer.document)
-  console.log(document)
+  const entityDetailList = useSelector( state => state.documentViewer.entity_detail_list)
 
   if (!document)
     return <div>Cargando</div>
@@ -56,7 +53,9 @@ export default () => {
         <LeftSideBar>
           <InfoCard label="Entidades detectadas"/>
           <TagsCard/> 
-          <EntityCardDetail/>
+
+          {entityDetailList.map( (e:any) =>  <EntityCardDetail title={e.key.replace("_"," ").capitalize()} values ={e.value} key={e.key}/>)}
+         
 
         </LeftSideBar>
         <DocumentArea />

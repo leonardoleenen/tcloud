@@ -1,23 +1,37 @@
 import React, { useState } from 'react'
 
-export default () => {
+
+
+
+interface Props {
+  title: string,
+  values: []
+}
+
+
+
+
+const renderRows = (isExpanded, values: []) => {
+  if (!isExpanded)
+    return
+
+  return (<div>{values.map((e: any) => <ul>
+    <li key={e.id} className='text-sm text-gray-600 border-b py-2'> {e.text}</li>
+  </ul>)}
+
+  </div>)
+}
+
+export default (props: Props) => {
 
   const [isExpanded, collapase] = useState(false)
 
   return <div className="mainContainer p-2 m-2 bg-white rounded-lg">
     <header>
-      <label className="subtitle mb-4">Socios</label>
+      <label className="subtitle mb-4">{props.title}</label>
       <div onClick={() => collapase(!isExpanded)} className='expandIcon bg-gray-200 rounded-lg'>{isExpanded ? <CollapseIcon /> : <ExpandIcon />}</div>
     </header>
-    {isExpanded ? <div><ul>
-      <li className='text-sm text-gray-600 border-b py-2'>DANIEL MENDOZA CANO, paraguayo, mayor de edad, nacido el 03 de Ene</li>
-    </ul>
-      <ul>
-        <li className='text-sm text-gray-600  border-b py-2'>DANIEL MENDOZA CANO, paraguayo, mayor de edad, nacido el 03 de Ene</li>
-      </ul>
-      <ul>
-        <li className='text-sm text-gray-600  border-b py-2'>DANIEL MENDOZA CANO, paraguayo, mayor de edad, nacido el 03 de Ene</li>
-      </ul> </div> : ''}
+    {renderRows(isExpanded, props.values)}
 
     <style jsx>
       {
