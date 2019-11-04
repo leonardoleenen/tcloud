@@ -9,7 +9,7 @@ import TagsCard from  '../../components/tags_card';
 import EntityCardDetail from '../../components/entity_card_detail';
 
 import { useRouter } from 'next/router'
-import {useState, useEffect} from 'react';
+import {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux'
 import {dataProvider} from '../../service/index';
 
@@ -21,16 +21,16 @@ import '../../styles/main.scss';
 export default () => {
 
   const router = useRouter()
-  const [entities, setEntities] = useState([])
   const dispatch = useDispatch()
   const {documentId} = router.query
 
   useEffect( () => {
    const fetchData = async () =>  {
     const d = await dataProvider.getDocument(documentId as string)
-    // dispatch(loadDocument(d.data))
-    dispatch(loadDocument(d.data[Object.keys(d.data)[0]]['data']))
-    setEntities(d.data)
+
+    dispatch(loadDocument(d.data[Object.keys(d.data)[0]]))
+    
+    // setEntities(d.data)
    }
 
    fetchData()
@@ -39,10 +39,13 @@ export default () => {
 
   //window['e']  = entities
 
-  console.log(entities[Object.keys(entities)[0]])
+  // console.log(entities[Object.keys(entities)[0]])
 
   const document = useSelector(state => state.documentViewer.document)
   console.log(document)
+
+  if (!document)
+    return <div>Cargando</div>
 
   return (  
     <div className="container" >
@@ -51,7 +54,7 @@ export default () => {
       </SearchBar>
       <div className="workspace">
         <LeftSideBar>
-          <InfoCard label="Entidades detectadas" values={[{ key: "Socios", value: "3" }, { key: "Razón Social", value: "1" }]} />
+          <InfoCard label="Entidades detectadas"/>
           <TagsCard/> 
           <EntityCardDetail/>
 

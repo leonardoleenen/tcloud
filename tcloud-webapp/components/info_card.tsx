@@ -1,5 +1,6 @@
 import React from 'react';
 import '../styles/main.scss'
+import {useSelector} from 'react-redux';
 
 interface Properties { 
   key: string
@@ -8,17 +9,33 @@ interface Properties {
 
 interface Props {
   label : string 
-  values : Array<Properties>
+  
 }
 
 
+
+
+
+
 export default (props:Props) => {
+
+  const rawEntities  = useSelector(state =>  state.documentViewer.document.data)
+
+  const values = []
+
+  Object.keys(rawEntities).map( (entityName: string) => {
+    values.push({
+      key: entityName.replace("_", " ").capitalize(),
+      value: rawEntities[entityName].length
+    })
+  })
+
 
   return <div className="m-2 bg-white rounded-lg">
 
     <div className='py-4  ml-2 subtitle bg-white rounded '>{props.label}</div>
 
-    {props.values.map((p:Properties) => (
+    {values.map((p:Properties) => (
        <div className= "bg-white ml-2 row" key={p.key}>
        <p className="bg-white text-gray-600"> {p.key}</p>
        <p  className="bg-white text-gray-600"> {p.value} </p>
