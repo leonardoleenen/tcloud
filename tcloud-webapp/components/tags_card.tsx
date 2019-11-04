@@ -9,9 +9,14 @@ export default () => {
   
   const values = []
 
+  const selectItem = (id: string) => {
+    console.log(id)
+  }
+
   Object.keys(rawEntities).map( (entityName: string) => {
     values.push({
-      key: entityName.replace("_", " ").capitalize()
+      key: entityName,
+      description: entityName.replace("_", " ").capitalize()
     })
   })
 
@@ -19,7 +24,7 @@ export default () => {
   return <div className="mainContainer p-2 m-2 bg-white rounded-lg"> 
     <label className="subtitle mb-4">Marcadores</label>
     <article> 
-      {values.map( (e:any) => <ToggleButton value={e.key} color="indigo" key={e.key}/>) }
+      {values.map( (e:any) => <ToggleButton callBackFunc={selectItem} value={e.description} color="indigo" id={e.key} key={e.key} />) }
     </article>
 
     <style jsx>
