@@ -10,7 +10,11 @@ import EntityCardDetail from '../../components/entity_card_detail';
 
 import { useRouter } from 'next/router'
 import {useState, useEffect} from 'react';
+import {useSelector, useDispatch} from 'react-redux'
 import {dataProvider} from '../../service/index';
+
+
+import {loadDocument} from '../../redux/actions/document_viewer';
 
 import '../../styles/main.scss';
 
@@ -18,15 +22,14 @@ export default () => {
 
   const router = useRouter()
   const [entities, setEntities] = useState([])
-
+  const dispatch = useDispatch()
   const {documentId} = router.query
 
   useEffect( () => {
-
-   
    const fetchData = async () =>  {
     const d = await dataProvider.getDocument(documentId as string)
-    console.log(d.data)
+    // dispatch(loadDocument(d.data))
+    dispatch(loadDocument(d.data[Object.keys(d.data)[0]]['data']))
     setEntities(d.data)
    }
 
@@ -38,6 +41,8 @@ export default () => {
 
   console.log(entities[Object.keys(entities)[0]])
 
+  const document = useSelector(state => state.documentViewer.document)
+  console.log(document)
 
   return (  
     <div className="container" >

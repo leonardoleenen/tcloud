@@ -3,6 +3,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import thunkMiddleware from 'redux-thunk'
 import { combineReducers } from 'redux';
 //import {userReducer,signUpReducer} from '../redux/reducers/user';
+import {documentViewerReducer} from '../redux/reducers/document_viewer';
 
 
 const initialState = {
@@ -18,6 +19,7 @@ export const settingReducer = (state = initialState.settings, action) => {
 
 const reducers = combineReducers({
   settings: settingReducer,
+  documentViewer: documentViewerReducer
   /*
   user: userReducer,
   signupProcess: signUpReducer, 
