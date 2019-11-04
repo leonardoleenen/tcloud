@@ -1,7 +1,7 @@
 import React from "react";
 
 export default (props) => {
-  return <div className= "searchBar">
+  return <div className= "searchBar border-b">
     {props.children} 
     <style jsx>
       {`

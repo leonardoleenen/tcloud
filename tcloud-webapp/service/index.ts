@@ -8,7 +8,8 @@ interface IDataProvider {
 
 class DataProvider implements IDataProvider {
   getDocument(documentId: string): Promise<any> {
-    return axios.get('https://api.myjson.com/bins/194s2k?' + documentId)
+    // return axios.get('https://ipfs.io/ipfs/' + documentId)
+    return axios.get('https://api.myjson.com/bins/' + documentId)
   }
 }
 
