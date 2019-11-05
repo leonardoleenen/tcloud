@@ -1,10 +1,10 @@
 import React from "react";
-import SearchBar from '../../components/layout/search_bar';
+
 import LeftSideBar from '../../components/layout/left_side_bar';
 import RightSideBar from '../../components/layout/rigth_side_bar';
 import DocumentArea from '../../components/layout/document_area';
 import InfoCard from '../../components/info_card';
-import ButtonSearch from '../../components/button_search';
+
 import TagsCard from  '../../components/tags_card';
 import EntityCardDetail from '../../components/entity_card_detail';
 
@@ -45,10 +45,8 @@ export default () => {
     return <div>Cargando</div>
 
   return (  
-    <div className="container" >
-      <SearchBar>
-        <ButtonSearch />
-      </SearchBar>
+    <div className="container bg-indigo-100" >
+      
       <div className="workspace">
         <LeftSideBar>
           <InfoCard label="Entidades detectadas"/>
@@ -67,7 +65,6 @@ export default () => {
         {
           `.container {
              display: grid;
-             grid-template-rows: 58px 4fr;
           }
           .workspace { 
             height: 100vh;

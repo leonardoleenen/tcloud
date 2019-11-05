@@ -31,7 +31,7 @@ export default (props:Props) => {
   })
 
 
-  return <div className="m-2 bg-white rounded-lg">
+  return <div className="bg-white rounded-lg mainContainer">
 
     <div className='py-4  ml-2 subtitle bg-white rounded '>{props.label}</div>
 
@@ -49,6 +49,10 @@ export default (props:Props) => {
         ` .row {
           display: grid;
           grid-template-columns: 80% 20%;
+        }
+
+        .mainContainer {
+          box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.05);
         }
         `
       }

@@ -6,7 +6,7 @@ import moment from 'moment';
 const ButtonEvaluar = () => {
 
   
-  return <div className="bg-indigo-500 buttonEvaluar mt-4 rounded-lg hover:bg-indigo-700 mb-4">
+  return <div className="bg-indigo-500 buttonEvaluar mt-4 rounded-lg hover:bg-indigo-700 mb-4 ">
     <div> <IconCheck/></div>
     <div className= " text-sm font-semibold  text-white">Evaluar </div>
     <div> </div>
@@ -38,7 +38,7 @@ export default () => {
   const transactionInfo = useSelector( state => state.documentViewer.document.transaction_info )
   
 
-  return <div className="bg-indigo-100 ">
+  return <div className="bg-indigo-100 mt-b  pt-4">
     <div className="h-full bg-white  ml-2 pl-4">
       <div className="border-b firstBlock">
         

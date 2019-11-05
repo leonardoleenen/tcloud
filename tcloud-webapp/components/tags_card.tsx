@@ -26,7 +26,7 @@ export default () => {
   })
 
 
-  return <div className="mainContainer p-2 m-2 bg-white rounded-lg"> 
+  return <div className="mainContainer mt-4 p-4 bg-white rounded-lg"> 
     <label className="subtitle mb-4">Marcadores</label>
     <article> 
       {values.map( (e:any, index: number) => <ToggleButton callBackFunc={selectItem} value={e.description} color={colors[index]} id={e.key} key={e.key} />) }
