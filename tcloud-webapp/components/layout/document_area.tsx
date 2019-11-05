@@ -1,7 +1,12 @@
 import React from 'react';
+import {useSelector} from 'react-redux'; 
+
+
 
 export default () => {
-  return <div className='documentArea'>Document Area
+  const fileContent = useSelector( state => state.documentViewer.document.transaction_info.file.content)
+  return <div className='documentArea'>
+        <img src={fileContent}/>
         <style jsx>
       {`
         .documentArea {
