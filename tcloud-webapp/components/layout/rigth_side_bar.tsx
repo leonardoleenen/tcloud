@@ -6,9 +6,9 @@ import moment from 'moment';
 const ButtonEvaluar = () => {
 
 
-  return <div className="bg-indigo-500 buttonEvaluar mt-4 rounded-lg hover:bg-indigo-700 mb-4 ">
-    <div> <IconCheck /></div>
-    <div className=" text-sm font-semibold  text-white">Evaluar </div>
+  return <div className="bg-indigo-500 buttonEvaluar mt-4 rounded hover:bg-indigo-700 mb-4 flex ">
+    <div className="ml-2 px-2 flex content-center "> <IconCheck /></div>
+    <div className=" text-sm font-semibold  text-white inblock-line align-middle">Evaluar </div>
     <div> </div>
 
     <style jsx>
@@ -17,13 +17,6 @@ const ButtonEvaluar = () => {
         .buttonEvaluar {
           height: 32px;
           width: 136px;
-          display: grid; 
-          grid-template-columns: 1fr 2fr 1fr
-        }
-
-        svg {
-          display: inline-block;
-          vertical-align: middle;
         }
         `
       }
@@ -50,7 +43,7 @@ export default () => {
           <div className="bg-indigo-100 rounded-lg w-8 h-8 flex content-center justify-center"><IconNotification /></div>
           <div className='text-sm font-semibold text-gray-600 flex content-center justify-center  ml-4'>Notificaciones</div>
         </ul>
-        <ul className=" mb-2 flex">
+        <ul className=" mb-2 flex pb-4">
           <div className="bg-indigo-100 rounded-lg w-8 h-8 flex content-center justify-center"><IconPeople/></div>
           <div className='text-sm font-semibold text-gray-600 flex content-center justify-center  ml-4'>Usuario</div>
         </ul>
@@ -84,8 +77,6 @@ export default () => {
               grid-template-rows: 150px 312px 60%
           }
 
-          
-        
           li::before {
             content: "•"; 
             color: #667EEA;
