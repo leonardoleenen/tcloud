@@ -4,7 +4,7 @@ Tool for traing and desing Metadata for NPL (based on Google, Amazon, IBM and cu
 # To Install 
 To install run this cmd: 
 
-`bash
+`
 cd  tcloud-webapp
 npm install 
 `
