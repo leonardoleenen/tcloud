@@ -12,7 +12,6 @@ interface Props {
 
 
 const renderRows = (isExpanded, values: []) => {
- 
   if (!isExpanded)
     return
 
