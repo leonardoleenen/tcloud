@@ -1,5 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import {useRouter} from 'next/router';
+
 import moment from 'moment';
 
 
@@ -28,6 +30,7 @@ const ButtonEvaluar = () => {
 
 export default () => {
 
+  const router  = useRouter()
   const transactionInfo = useSelector(state => state.documentViewer.document.transaction_info)
 
 
@@ -68,8 +71,8 @@ export default () => {
         </article>
       </div>
       <footer className="border-b py-4 border-none">
-          <div className=" h-12 w-12 bg-white border border-indigo-500 rounded-full mr-24 flex  hover:border-indigo-500 "> <IconAdd/></div>
-          <div className="h-12 w-12 bg-indigo-500 border border-indigo-500 rounded-full mr-6 flex shadow hover:bg-indigo-700"> <IconSearch/></div>
+          <div className=" h-12 w-12 bg-white border border-indigo-500 rounded-full mr-24 flex  hover:border-indigo-500 " onClick={ () => router.push('/v/load_file')}> <IconAdd/></div>
+          <div className="h-12 w-12 bg-indigo-500 border border-indigo-500 rounded-full mr-6 flex shadow hover:bg-indigo-700" > <IconSearch/></div>
       </footer>
     </div>
     <style jsx>
