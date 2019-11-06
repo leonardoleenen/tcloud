@@ -33,7 +33,8 @@ export default () => {
     // setEntities(d.data)
    }
 
-   fetchData()
+   if (documentId)
+    fetchData()
 
   }, []) 
 

@@ -4,6 +4,9 @@ const withPlugins = require('next-compose-plugins');
 const withTypescript = require('@zeit/next-typescript')
 const withImages = require('next-images')
 
+
 module.exports = withPlugins(
     [withTypescript,withCSS,withImages, withSass]
   );
+
+ 

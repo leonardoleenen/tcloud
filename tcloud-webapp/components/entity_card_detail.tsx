@@ -25,7 +25,7 @@ const renderRows = (isExpanded, values: []) => {
 
 export default (props: Props) => {
 
-  const [isExpanded, collapase] = useState(false)
+  const [isExpanded, collapase] = useState(true)
 
   return <div className="mainContainer p-4 mt-4 bg-white rounded-lg ">
     <header className=" flex">
