@@ -16,7 +16,7 @@ export default (prop: Props) => {
     prop.callBackFunc(prop.id)
   }}>
     <div className={`textAvatar rounded-full bg-${prop.color}-700 text-center text-sm text-white font-semibold  `}>{prop.value.trim().split(" ").map(a => a[0].toUpperCase()).join("")}</div>
-    <label className={`ml-2 mr-4 text-center text-sm font-semibold ${toogled ? 'text-white bg-' + prop.color + '-500' : 'text-' + prop.color + '-500  bg-white'} `} >{prop.value}</label>
+    <label className={`ml-2 mr-4 text-center text-sm font-semibold ${toogled ? 'text-white bg-' + prop.color + '-500' : 'text-' + prop.color + '-500  bg-white'} `} ><span>{prop.value}</span></label>
 
     <style jsx>
       {`
