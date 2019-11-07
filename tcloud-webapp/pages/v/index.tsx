@@ -48,7 +48,7 @@ export default () => {
   return (  
     <div className="container bg-indigo-100" >
       
-      <div className="workspace">
+      <div className="workspace w-screen h-screen">
         <LeftSideBar>
           <InfoCard label="Entidades detectadas"/>
           <TagsCard/> 
@@ -68,7 +68,8 @@ export default () => {
              display: grid;
           }
           .workspace { 
-            height: 100vh;
+          
+           
             display: grid;
             grid-template-columns: 1fr 3fr 1fr;
           }
