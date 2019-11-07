@@ -11,7 +11,7 @@ export default (prop: Props) => {
 
   const [toogled, setToggled] = useState(false)
 
-  return <div className={`button border rounded-full border-${prop.color}-700 w-auto  ${toogled ? 'text-white bg-' + prop.color + '-500' : 'text-' + prop.color + '-500  bg-white'}`} onClick={() => {
+  return <div className={`button border rounded-full  w-auto  ${toogled ? 'text-white bg-' + prop.color + '-500' : 'text-' + prop.color + '-500  bg-white border-' + prop.color + '-700 '}`} onClick={() => {
     setToggled(!toogled)
     prop.callBackFunc(prop.id)
   }}>
