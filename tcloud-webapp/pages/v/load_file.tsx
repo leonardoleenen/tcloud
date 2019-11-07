@@ -2,7 +2,7 @@ import React, {useCallback} from 'react';
 import '../../styles/main.scss';
 import {useDropzone} from 'react-dropzone'
 import {useDispatch} from 'react-redux'
-import {loadDocument} from '../../redux/actions/document_viewer';
+import {loadDocument, cleanDocument} from '../../redux/actions/document_viewer';
 import { useRouter } from 'next/router'
 
 
@@ -26,6 +26,7 @@ export default () => {
 
       const document = Object.keys(rawDocument).map( key => rawDocument[key])[0]
       
+      dispatch(cleanDocument())
       dispatch(loadDocument(document))
       router.push('/v')
       //console.log(document)

@@ -1,9 +1,10 @@
 
-import {LOAD_DOCUMENT, UPDATE_ENTITY_DETAIL_LIST} from '../reducers/document_viewer';
+import {LOAD_DOCUMENT, UPDATE_ENTITY_DETAIL_LIST, CLEAN_DOCUMENT} from '../reducers/document_viewer';
+
+
 
 export const loadDocument = (document: any) => {
-  return (dispatch, getState) => {
-    console.log(getState)
+  return (dispatch) => {
     return dispatch({
       type: LOAD_DOCUMENT,
       document
@@ -26,3 +27,13 @@ export const updateEntityDetailList = (id: string) => {
     })
   }
 } 
+
+export const cleanDocument = () => {
+  return (dispatch) => {
+    return dispatch({
+      type: CLEAN_DOCUMENT,
+      document: {},
+      entity_detail_list: []
+    })
+  }
+}
