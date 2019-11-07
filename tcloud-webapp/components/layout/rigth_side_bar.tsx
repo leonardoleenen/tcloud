@@ -1,7 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import {useRouter} from 'next/router';
-
 import moment from 'moment';
 
 
@@ -10,7 +8,7 @@ const ButtonEvaluar = () => {
 
   return <div className="bg-indigo-500 buttonEvaluar mt-4 rounded hover:bg-indigo-700 mb-4 flex ">
     <div className="ml-2 px-2 flex content-center "> <IconCheck /></div>
-    <div className=""><span className=" text-sm font-semibold  text-white inblock-line align-middle">Evaluar</span> </div>
+    <div className=" text-sm font-semibold  text-white inblock-line align-middle">Evaluar </div>
     <div> </div>
 
     <style jsx>
@@ -30,25 +28,24 @@ const ButtonEvaluar = () => {
 
 export default () => {
 
-  const router  = useRouter()
   const transactionInfo = useSelector(state => state.documentViewer.document.transaction_info)
 
 
-  return <div className="bg-indigo-100 mt-b  ">
-    <div className="h-full bg-white  ml-2 pl-4">
-      <div className="border-b   ">
+  return <div className="ml-5 navDesplegable">
+    <div className="h-full bg-white pl-4">
+      <div className="border-b">
 
-        <ul className='mt-4 mb-2 flex content-center pt-4 '>
+        <ul className='mb-2 flex pt-4'>
           <div className="bg-indigo-100 rounded-lg w-8 h-8    flex content-center justify-center"  ><IconClose /></div>
-          <div className=''><span className="text-sm font-semibold text-gray-600   inline-block align-middle   ml-4 ">Cerrar Info</span></div>
+          <div className='text-sm font-semibold text-gray-600   flex content-center justify-center ml-4 '>Cerrar Info</div>
         </ul >
         <ul className=" mb-2 flex">
           <div className="bg-indigo-100 rounded-lg w-8 h-8 flex content-center justify-center"><IconNotification /></div>
-          <div> <span className="text-sm font-semibold text-gray-600   inline-block align-middle   ml-4 ">Notificaciones</span></div>
+          <div className='text-sm font-semibold text-gray-600 flex content-center justify-center  ml-4'>Notificaciones</div>
         </ul>
         <ul className=" mb-2 flex pb-4">
           <div className="bg-indigo-100 rounded-lg w-8 h-8 flex content-center justify-center"><IconPeople/></div>
-          <div> <span className="text-sm font-semibold text-gray-600   inline-block align-middle   ml-4 ">Usuario</span></div>
+          <div className='text-sm font-semibold text-gray-600 flex content-center justify-center  ml-4'>Usuario</div>
         </ul>
 
       </div>
@@ -71,8 +68,8 @@ export default () => {
         </article>
       </div>
       <footer className="border-b py-4 border-none">
-          <div className=" h-12 w-12 bg-white border border-indigo-500 rounded-full mr-24 flex  hover:border-indigo-500 " onClick={ () => router.push('/v/load_file')}> <IconAdd/></div>
-          <div className="h-12 w-12 bg-indigo-500 border border-indigo-500 rounded-full mr-6 flex shadow hover:bg-indigo-700" > <IconSearch/></div>
+          <div className=" h-12 w-12 bg-white border border-indigo-500 rounded-full mr-24 flex  hover:border-indigo-500 "> <IconAdd/></div>
+          <div className="h-12 w-12 bg-indigo-500 border border-indigo-500 rounded-full mr-6 flex shadow hover:bg-indigo-700"> <IconSearch/></div>
       </footer>
     </div>
     <style jsx>
@@ -99,6 +96,9 @@ export default () => {
             display: inline-block; 
             font-size: 1.5em; 
             width: 0.8em;
+          }
+          .navDesplegable {
+            border-left: 1px solid rgba(200, 201, 233, 0.35)
           }
         `
       }
@@ -133,9 +133,9 @@ const IconCheck = () => (
 const IconPeople = () => (
   <svg  style={{ margin: 'auto' }}  width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g id="Icon/Outline/person">
-      <path id="Mask" fill-rule="evenodd" clipRule="evenodd" d="M14 7C14 5.897 13.103 5 12 5C10.897 5 10 5.897 10 7C10 8.103 10.897 9 12 9C13.103 9 14 8.103 14 7ZM16 7C16 9.206 14.206 11 12 11C9.794 11 8 9.206 8 7C8 4.794 9.794 3 12 3C14.206 3 16 4.794 16 7ZM5 20C5 16.14 8.141 13 12 13C15.859 13 19 16.14 19 20C19 20.552 18.553 21 18 21C17.447 21 17 20.552 17 20C17 17.243 14.757 15 12 15C9.243 15 7 17.243 7 20C7 20.552 6.553 21 6 21C5.447 21 5 20.552 5 20Z" fill="#231F20" />
+      <path id="Mask" fill-rule="evenodd" clip-rule="evenodd" d="M14 7C14 5.897 13.103 5 12 5C10.897 5 10 5.897 10 7C10 8.103 10.897 9 12 9C13.103 9 14 8.103 14 7ZM16 7C16 9.206 14.206 11 12 11C9.794 11 8 9.206 8 7C8 4.794 9.794 3 12 3C14.206 3 16 4.794 16 7ZM5 20C5 16.14 8.141 13 12 13C15.859 13 19 16.14 19 20C19 20.552 18.553 21 18 21C17.447 21 17 20.552 17 20C17 17.243 14.757 15 12 15C9.243 15 7 17.243 7 20C7 20.552 6.553 21 6 21C5.447 21 5 20.552 5 20Z" fill="#231F20" />
       <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="5" y="3" width="14" height="18">
-        <path id="Mask_2" fill-rule="evenodd" clipRule="evenodd" d="M14 7C14 5.897 13.103 5 12 5C10.897 5 10 5.897 10 7C10 8.103 10.897 9 12 9C13.103 9 14 8.103 14 7ZM16 7C16 9.206 14.206 11 12 11C9.794 11 8 9.206 8 7C8 4.794 9.794 3 12 3C14.206 3 16 4.794 16 7ZM5 20C5 16.14 8.141 13 12 13C15.859 13 19 16.14 19 20C19 20.552 18.553 21 18 21C17.447 21 17 20.552 17 20C17 17.243 14.757 15 12 15C9.243 15 7 17.243 7 20C7 20.552 6.553 21 6 21C5.447 21 5 20.552 5 20Z" fill="white" />
+        <path id="Mask_2" fill-rule="evenodd" clip-rule="evenodd" d="M14 7C14 5.897 13.103 5 12 5C10.897 5 10 5.897 10 7C10 8.103 10.897 9 12 9C13.103 9 14 8.103 14 7ZM16 7C16 9.206 14.206 11 12 11C9.794 11 8 9.206 8 7C8 4.794 9.794 3 12 3C14.206 3 16 4.794 16 7ZM5 20C5 16.14 8.141 13 12 13C15.859 13 19 16.14 19 20C19 20.552 18.553 21 18 21C17.447 21 17 20.552 17 20C17 17.243 14.757 15 12 15C9.243 15 7 17.243 7 20C7 20.552 6.553 21 6 21C5.447 21 5 20.552 5 20Z" fill="white" />
       </mask>
       <g mask="url(#mask0)">
         <g id="&#240;&#159;&#142;&#168; Color">

@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default (props) => {
-    return <div className="bg-indigo-100 p-4">
+    return <div className="p-5">
         {props.children}
         
     </div> 
