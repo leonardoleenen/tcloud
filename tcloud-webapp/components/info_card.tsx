@@ -31,18 +31,17 @@ export default (props:Props) => {
   })
 
 
-  return <div className="bg-white rounded-lg mainContainer">
+  return <div className="bg-white rounded-lg mainContainer py-6 px-4">
 
-    <div className='py-4  ml-2 subtitle bg-white rounded '>{props.label}</div>
+    <div className='text-base font-semibold text-gray-800 mb-4'>{props.label}</div>
 
     {values.map((p:Properties) => (
-       <div className= "bg-white ml-2 row" key={p.key}>
-       <p className="bg-white text-gray-600"> {p.key}</p>
-       <p  className="bg-white text-gray-600"> {p.value} </p>
+       <div className= "bg-white row" key={p.key}>
+       <p className="bg-white text-sm text-gray-600"> {p.key}</p>
+       <p  className="bg-white text-sm text-gray-600 text-right"> {p.value} </p>
      </div>
     ))}
    
-    <p className="bg-white rounded py-2"> </p>
  
     <style jsx>
       {
