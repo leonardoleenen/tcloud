@@ -46,9 +46,9 @@ export default () => {
     return <div>Cargando</div>
 
   return (  
-    <div className="container bg-indigo-100" >
+    <div className="bg-gray-100" >
       
-      <div className="workspace w-screen h-screen">
+      <div className="workspace">
         <LeftSideBar>
           <InfoCard label="Entidades detectadas"/>
           <TagsCard/> 
@@ -68,8 +68,6 @@ export default () => {
              display: grid;
           }
           .workspace { 
-          
-           
             display: grid;
             grid-template-columns: 1fr 3fr 1fr;
           }
