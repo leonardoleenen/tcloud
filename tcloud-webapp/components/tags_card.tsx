@@ -3,8 +3,7 @@ import ToggleButton from '../components/toggle_button'
 import {useSelector, useDispatch} from 'react-redux';
 import {updateEntityDetailList} from '../redux/actions/document_viewer'; 
 
-const colors = ['gray' , 'red', 'orange', 'yellow', 'green', 'teal', 'blue', 'indigo', 'purple', 'pink']
-
+const colors = ['green' , 'red', 'orange', 'yellow', 'gray', 'teal', 'blue', 'indigo', 'purple', 'pink']
 
 
 export default () => {

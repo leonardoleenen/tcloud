@@ -7,10 +7,10 @@
             "id_image": "",
             "confidence": 75,
             "area": {
-              "x-pos": 32314531,
-              "y-pos": 90053244,
-              "width": 90,
-              "height": 123
+              "x-pos": "unused",
+              "y-pos": 170,
+              "width": "UNUSED",
+              "height": 20
             },
             "text": "ROMERO ADRIAN"
           },
@@ -19,11 +19,11 @@
             "id_image": "",
             "confidence": 81,
             "area": {
-              "x-pos": 0,
-              "y-pos": 90053244,
-              "width": 90,
-              "height": 123
-            },
+                "x-pos": "unused",
+                "y-pos": 260,
+                "width": "UNUSED",
+                "height": 20
+              },
             "values": [],
             "text": "ALOUT, JEAN DAVID"
           }
@@ -34,11 +34,11 @@
             "id_image": "",
             "confidence": 45,
             "area": {
-              "x-pos": 32314531,
-              "y-pos": 90053244,
-              "width": 90,
-              "height": 123
-            },
+                "x-pos": "unused",
+                "y-pos": 425,
+                "width": "UNUSED",
+                "height": 50
+              },
             "text": "AR SERVICES  S.R.L"
           }
         ],
@@ -46,12 +46,7 @@
             "id": "8",
             "id_image": "",
             "confidence": 45,
-            "area": {
-              "x-pos": 32314531,
-              "y-pos": 90053244,
-              "width": 90,
-              "height": 123
-            },
+            "area":null,
             "text": "CIENCUENTA MIL PESOS"
           }],
           "duracion": [{
@@ -59,11 +54,11 @@
             "id_image": "",
             "confidence": 45,
             "area": {
-              "x-pos": 32314531,
-              "y-pos": 90053244,
-              "width": 90,
-              "height": 123
-            },
+                "x-pos": "unused",
+                "y-pos": 513,
+                "width": "UNUSED",
+                "height": 50
+              },
             "text": "NOVENTA Y NUEVE años"
           }],
           "objeto_social": [{
@@ -71,11 +66,11 @@
             "id_image": "",
             "confidence": 45,
             "area": {
-              "x-pos": 32314531,
-              "y-pos": 90053244,
-              "width": 90,
-              "height": 123
-            },
+                "x-pos": "unused",
+                "y-pos": 595,
+                "width": "UNUSED",
+                "height": 500
+              },
             "text": "La realización por si, por cuenta de terceros, tant en la Republica Argentina como en el exterior del país, las siguientes actividades: prestación de servicio de limpieza de oficinas, fabricas, edificios, consorcios y establecimientos públicos y/o privados en general; mantenimiento, refacción, restauración, remodelación, pintura y desinfección, fumigación, limpieza de vidrios, cortinas, alfombras y demás equipamientos"
           }]
       },
