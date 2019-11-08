@@ -15,21 +15,49 @@ const renderRows = (isExpanded, values: []) => {
   if (!isExpanded)
     return
 
-  return (<div >{values.map((e: any) => <ul>
-    <li key={e.id} className='text-sm text-gray-600 border-b py-2'> {e.text}</li>
+  return (<div >{values.map((e: any) => <ul className='renderRowsItem'>
+    <li key={e.id} className='text-sm text-gray-600'> {e.text}</li>
   </ul>)}
 
-  </div>)
+  <style jsx>
+    {
+      
+      `
+      .renderRowsItem {
+        margin-bottom: 10px;
+        padding-left: 13px;
+        position: relative;
+      }
+      .renderRowsItem:last-child {
+        margin-bottom: 0;
+      }
+      .renderRowsItem:before {
+        content: '';
+        width: 6px;
+        height: 6px;
+        background: #667EEA;
+        border-radius: 100%;
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 8px;
+      }
+      `
+    }
+  </style>
+
+  </div>
+  )
 }
 
 export default (props: Props) => {
 
   const [isExpanded, collapase] = useState(true)
 
-  return <div className="mainContainer p-4 mt-4 bg-white rounded-lg ">
+  return <div className="bg-white rounded-lg mainContainer py-6 px-4 mt-5">
     <header className=" flex">
-      <label className="subtitle mb-4 w-11/12" >{props.title}</label>
-      <div  onClick={() => collapase(!isExpanded)} className='expandIcon bg-gray-200 rounded justify-end w-5 h-5 flex content-center justify-center'>{isExpanded ? <CollapseIcon /> : <ExpandIcon />}</div>
+      <label className="text-base font-semibold text-gray-800 mb-4 w-11/12" >{props.title}</label>
+      <div  onClick={() => collapase(!isExpanded)} className='cursor-pointer expandIcon bg-gray-200 rounded justify-end w-5 h-5 flex content-center justify-center'>{isExpanded ? <CollapseIcon /> : <ExpandIcon />}</div>
     </header>
     {renderRows(isExpanded, props.values)}
 
@@ -39,6 +67,11 @@ export default (props: Props) => {
         `
         .expandIcon {
           box-shadow: 0px 0.625px 1.875px rgba(0, 0, 0, 0.08);
+          transition: all 200ms ease-in;
+        }
+        .expandIcon:hover {
+          opacity: 0.7;
+          transform: translateY(-1px)
         }
         
 
@@ -59,7 +92,7 @@ export default (props: Props) => {
           
         }
 
-        
+
 
         li::before {
           content: "•"; 
