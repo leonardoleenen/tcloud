@@ -21,7 +21,7 @@ export default () => {
     {entityDetailList.map(e => (
       (
         e.value.map(pos => {
-           return pos.area ? ((<div style={style(pos) as React.CSSProperties} >
+           return pos.area ? ((<div style={style(pos) as React.CSSProperties} className="marker">
             <div style={{ height: pos.area.height + "px" }} className="bg-white w-18 h-18 text-black" ><span className={`flex justify-center rounded-full bg-${colors[Object.keys(entityList).indexOf(e.key)]}-700   mx-2 text-white`}>{e.key.trim().split("_").map(a => a[0].toUpperCase()).join("")}</span></div>
             <div className={`mark bg-${colors[Object.keys(entityList).indexOf(e.key)]}-700 opacity-25 h-full`}> .</div>
           </div>
@@ -37,6 +37,11 @@ export default () => {
       {`
         .documentArea {
           background-color: white;
+        }
+
+        .marker { 
+          cursor: pointer;
+          transition: all 400ms ease-in;
         }
       `}
     </style>
