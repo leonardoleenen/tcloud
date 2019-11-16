@@ -1,22 +1,26 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+//import { useSelector } from 'react-redux';
 
+/*
 const style = (pos) => {
   return { display: "grid", gridTemplateColumns: "8% 82%", position: "absolute", top: pos.area['y-pos'] + "px", width: "60%", height: pos.area.height + "px" }
 }
 
 const colors = ['green', 'red', 'orange', 'yellow', 'gray', 'teal', 'blue', 'indigo', 'purple', 'pink']
-
+*/
 
 
 
 export default () => {
+  return <div> Document area</div>
+  /* 
 
   const entityDetailList = useSelector(state => state.documentViewer.entity_detail_list)
   const entityList = useSelector(state => state.documentViewer.document.data)
 
 
-  const fileContent = useSelector(state => state.documentViewer.document.transaction_info.file.content)
+  const fileContent = useSelector(state => state.documentViewer.document.transaction_info ? state.documentViewer.document.transaction_info.file.content : null)
+
   return <div className='documentArea mt-4'>
     {entityDetailList.map(e => (
       (
@@ -32,7 +36,9 @@ export default () => {
     )}
 
 
-    <img src={fileContent} />
+    {fileContent ? <img src={fileContent} /> : ''}
+
+
     <style jsx>
       {`
         .documentArea {
@@ -45,5 +51,5 @@ export default () => {
         }
       `}
     </style>
-  </div>
+  </div>*/
 }

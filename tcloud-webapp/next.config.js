@@ -6,7 +6,6 @@ const withImages = require('next-images')
 
 
 module.exports = withPlugins(
-    [withTypescript,withCSS,withImages, withSass]
-  );
+  [withTypescript, withCSS, withImages, withSass]
+);
 
- 

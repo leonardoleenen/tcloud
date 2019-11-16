@@ -14,16 +14,24 @@ export const loadDocument = (document: any) => {
 
 export const updateEntityDetailList = (id: string) => {
   return (dispatch, getState) => {
-    let  list =  Object.assign ([],getState().documentViewer.entity_detail_list)
-    const result =  list.filter( e =>  e.key ===id)
-    if (result.length >=1 ) //must remove 
-      list = list.filter( e => e.key != id )
-    else
-      list.push( Object.assign({},{key: id, value: getState().documentViewer.document.data[id]}))
+    let entityDetails = Object.assign([],getState().documentViewer.entity_detail_list as Array<LNEntity>)
+
+    let  entitiesFromDocument =  Object.assign ([],getState().documentViewer.document.entities) as Array<LNEntity>
+    
+    const alreadyExists  =  entityDetails.filter( (e: LNEntity) =>  e.id ===id).length >=1 
+    //console.log(alreadyExists)
+
+
+    if (alreadyExists ){
+      entityDetails = entityDetails.filter( e => e.id != id )
+    } //must remove 
+    else {
+      entityDetails.push( Object.assign( {} , entitiesFromDocument.filter( (e: LNEntity) =>  e.id ===id)[0]))
+    }
 
     return dispatch({
       type: UPDATE_ENTITY_DETAIL_LIST,
-      list 
+      list:  Object.assign([],entityDetails) 
     })
   }
 } 

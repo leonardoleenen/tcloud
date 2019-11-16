@@ -9,27 +9,19 @@ const colors = ['gray' , 'red', 'orange', 'yellow', 'green', 'teal', 'blue', 'in
 
 export default () => {
 
-  const rawEntities = useSelector( state => state.documentViewer.document.data)
+  const rawEntities = useSelector( state => state.documentViewer.document.entities) as Array<LNEntity>
   const dispatch = useDispatch()
 
-  const values = []
-
-  const selectItem = (id: string) => {
+   const selectItem = (id: string) => {
     dispatch(updateEntityDetailList(id))
   }
 
-  Object.keys(rawEntities).map( (entityName: string) => {
-    values.push({
-      key: entityName,
-      description: entityName.replace("_", " ").capitalize()
-    })
-  })
-
+ 
 
   return <div className="bg-white rounded-lg mainContainer py-6 px-4 mt-5"> 
     <div className="text-base font-semibold text-gray-800 mb-4">Marcadores</div>
     <article> 
-      {values.map( (e:any, index: number) => <ToggleButton callBackFunc={selectItem} value={e.description} color={colors[index]} id={e.key} key={e.key} />) }
+      {rawEntities.map( (e:LNEntity, index: number) => <ToggleButton callBackFunc={selectItem} value={e.display_name} color={colors[index]} id={e.id} key={e.id} />) }
     </article>
 
     <style jsx>

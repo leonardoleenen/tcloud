@@ -29,7 +29,18 @@ const ButtonEvaluar = () => {
 
 export default () => {
 
-  const transactionInfo = useSelector(state => state.documentViewer.document.transaction_info)
+  let transactionInfo = {
+    file: {
+      name:  "FALTA ENVIAR POR CARLOS!!",
+      global_health_accuracy: 0
+    },
+    request_by: {
+      requested_at: 0,
+    }
+  }
+
+  transactionInfo = useSelector(state => state.documentViewer.document.transaction_info ? state.documentViewer.document.transaction_info : transactionInfo)
+
   const router = useRouter()
 
   return <div className="ml-5 navDesplegable">

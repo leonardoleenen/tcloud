@@ -2,10 +2,6 @@ import React from 'react';
 import '../styles/main.scss'
 import {useSelector} from 'react-redux';
 
-interface Properties { 
-  key: string
-  value: string 
-}
 
 interface Props {
   label : string 
@@ -19,26 +15,28 @@ String.prototype.capitalize = function() {
 
 export default (props:Props) => {
 
-  const rawEntities  = useSelector(state =>  state.documentViewer.document.data)
+  const rawEntities  = useSelector(state =>  state.documentViewer.document.entities) as Array<LNEntity>
 
-  const values = []
+  // const values = []
 
-  Object.keys(rawEntities).map( (entityName: string) => {
+  /* Object.keys(rawEntities).map( (entityName: string) => {
     values.push({
       key: entityName.replace("_", " ").capitalize(),
       value: rawEntities[entityName].length
     })
-  })
+  }) */ 
 
+  
 
+  console.log(rawEntities)  
   return <div className="bg-white rounded-lg mainContainer py-6 px-4">
 
     <div className='text-base font-semibold text-gray-800 mb-4'>{props.label}</div>
 
-    {values.map((p:Properties) => (
-       <div className= "bg-white row" key={p.key}>
-       <p className="bg-white text-sm text-gray-600"> {p.key}</p>
-       <p  className="bg-white text-sm text-gray-600 text-right"> {p.value} </p>
+    {rawEntities.map((e:LNEntity) => (
+       <div className= "bg-white row" key={e.id}>
+       <p className="bg-white text-sm text-gray-600"> {e.display_name}</p>
+       <p  className="bg-white text-sm text-gray-600 text-right"> { e.values  ? e.values.length : 1} </p>
      </div>
     ))}
    

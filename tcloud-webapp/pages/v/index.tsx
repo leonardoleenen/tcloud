@@ -1,5 +1,5 @@
-import React from "react";
-
+import React from "react"
+import uuid4 from 'uuid4' 
 import LeftSideBar from '../../components/layout/left_side_bar';
 import RightSideBar from '../../components/layout/rigth_side_bar';
 import DocumentArea from '../../components/layout/document_area';
@@ -39,8 +39,10 @@ export default () => {
   }, []) 
 
  
+  
   const document = useSelector(state => state.documentViewer.document)
   const entityDetailList = useSelector( state => state.documentViewer.entity_detail_list)
+
 
   if (!document)
     return <div>Cargando</div>
@@ -53,8 +55,7 @@ export default () => {
           <InfoCard label="Entidades detectadas"/>
           <TagsCard/> 
 
-          {entityDetailList.map( (e:any) =>  <EntityCardDetail title={e.key.replace("_"," ").capitalize()} values ={e.value} key={e.key}/>)}
-         
+          {entityDetailList.map( (e:LNEntity) =>  <EntityCardDetail entity={e} key={uuid4()}/>)}
 
         </LeftSideBar>
         <DocumentArea />
