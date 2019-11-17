@@ -1,0 +1,57 @@
+
+{
+      "job_name": "<nombre>",
+      "input_spec": {
+        "plugin_name": "input_adapters.receive_request_pdf",
+        "worker": "CV",
+        "meta": {
+          "b64": "b64"
+        }
+      },
+      "pipeline": [
+        {
+          "plugin_name": "extract_pdf_images",
+          "worker": "CV"
+        },
+        {
+          "plugin_name": "document_factory.create_document",
+          "worker": "CV"
+        },
+        {
+          "worker": "OCR",
+          "plugin_name": "read_document.document_ocr"
+        },
+        {
+          "plugin_name": "razon_social.plugin",
+          "worker": "NLP",
+          "input_adapter": {
+            "worker": "NLP",
+            "plugin_name": "razon_social.input"
+          }
+        },
+        {
+          "plugin_name": "socios.plugin",
+          "worker": "NLP",
+          "input_adapter": {
+            "worker": "NLP",
+            "plugin_name": "socios.input"
+          }
+        },
+        {
+          "plugin_name": "tipicidad.plugin",
+          "worker": "NLP",
+          "input_adapter": {
+            "worker": "NLP",
+            "plugin_name": "tipicidad.input"
+          },
+          "output_adapter": {
+            "plugin_name": "tipicidad.output",
+            "worker": "NLP"
+          }
+        }
+      ],
+      "output_spec": {
+        "plugin_name": "output_adapters.output_json",
+        "worker": "NLP"
+      }
+    }

@@ -17,18 +17,6 @@ export default (props:Props) => {
 
   const rawEntities  = useSelector(state =>  state.documentViewer.document.entities) as Array<LNEntity>
 
-  // const values = []
-
-  /* Object.keys(rawEntities).map( (entityName: string) => {
-    values.push({
-      key: entityName.replace("_", " ").capitalize(),
-      value: rawEntities[entityName].length
-    })
-  }) */ 
-
-  
-
-  console.log(rawEntities)  
   return <div className="bg-white rounded-lg mainContainer py-6 px-4">
 
     <div className='text-base font-semibold text-gray-800 mb-4'>{props.label}</div>

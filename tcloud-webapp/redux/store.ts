@@ -20,12 +20,6 @@ export const settingReducer = (state = initialState.settings, action) => {
 const reducers = combineReducers({
   settings: settingReducer,
   documentViewer: documentViewerReducer
-  /*
-  user: userReducer,
-  signupProcess: signUpReducer, 
-  mainProcess: mainProcessReducer,
-  agenda: agendaReducer,
-  reservation: reservationReducer*/
 });
 
 export function initializeStore (initialState) {

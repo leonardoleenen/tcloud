@@ -6,7 +6,6 @@ interface Props {
 }
 
 const renderRows = (isExpanded, e: LNEntity) => {
-  console.log(e)
   if (!isExpanded)
     return
 

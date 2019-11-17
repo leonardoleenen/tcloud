@@ -5,7 +5,8 @@ interface String {
 
 type LNImage = {
   line: number
-  page: string 
+  page: number 
+  b64: string
 }
 
 type LNPos = {
@@ -22,9 +23,49 @@ type LNEntity = {
   display_name: string 
   text: string 
   values? : Array<LNEntityValue>
+  pos ? : Array<LNPos>
 }
 
 type LNDocument = {
   entities: Array<LNEntity>
   images: Array<LNImage>
+}
+
+type LNSpecMeta = {
+  b64: string 
+}
+
+type LNInputSpec = {
+  plugin_name: string 
+  worker : string 
+  meta: LNSpecMeta
+}
+
+type LNOutPutSpec = {
+  plugin_name: string
+  worker: string 
+}
+
+type LNPipelineItem = {
+  worker: string 
+  plugin_name: string 
+  input_adapter? : LNInputAdapter
+  output_adapter? : LNOutputAdapter
+}
+
+type LNInputAdapter = {
+  worker: string 
+  puglin_name: string 
+}
+
+type LNOutputAdapter = {
+  worker: string 
+  puglin_name: string 
+}
+
+type LNSRequestSpec = {
+  job_name: string 
+  input_spec : LNInputSpec
+  pipeline : Array<LNPipelineItem>
+  output_spec : LNOutPutSpec
 }
