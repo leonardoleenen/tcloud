@@ -16,7 +16,7 @@ import {dataProvider} from '../../service/index';
 
 import {loadDocument} from '../../redux/actions/document_viewer';
 
-import '../../styles/main.scss';
+import '../../static/styles/main.scss';
 
 export default () => {
 

@@ -1,9 +1,9 @@
 import React, { useCallback, useState } from 'react';
-import '../../styles/main.scss';
+import '../../static/styles/main.scss';
 import uuid4 from 'uuid4'
 import { useDropzone } from 'react-dropzone'
 import axios from 'axios'
-import Waiting from '../../components/waiting_load_result'
+import Waiting, {WaitingStage} from '../../components/waiting_load_result'
 
 import { useDispatch } from 'react-redux'
 import { loadDocument } from '../../redux/actions/document_viewer';
@@ -70,12 +70,14 @@ const getRequest = (b64) => {
   } as LNSRequestSpec
 }
 
+
+
+
 export default () => {
   const dispatch = useDispatch()
   const router = useRouter()
-
-  const [pending, setPending] = useState(false)
-  //const [jobId, setJobId] = useState()
+  const [stage,setStage] = useState(null)
+  const [stageError, setStageError] = useState(null)
 
   const getStatus = (job_id: string) => {
     axios.get('http://docker01.leafnoise.io:35000/jobs/status?id=' + job_id).then(result => {
@@ -85,7 +87,7 @@ export default () => {
         return
       }
 
-      setPending(false)
+      setStage(WaitingStage.done)
       axios.get('http://docker01.leafnoise.io:35000/jobs/output?id=' + job_id).then(result => {
         dispatch(loadDocument(result.data))
         router.push('/v')
@@ -109,10 +111,14 @@ export default () => {
 
       const requestToSend = getRequest(base64)
 
-      setPending(true)
-      axios.post('http://docker01.leafnoise.io:35000/jobs/submit', requestToSend).then(result => {
-        //setJobId(result.data.job_id)
+      setStage(WaitingStage.waiting_send_file_response)
+      axios.post('http://docker01.leafnoise.io:35000/jobs/submit', requestToSend).
+        then(result => {
+        setStageError(WaitingStage.wainting_finish_job)
         setTimeout(() => getStatus(result.data.job_id), 5000)
+      }).catch ( error => {
+        setStageError('Ha ocurrido un error al intentar transferir el archivo al server. ')
+        console.log(error)
       })
 
     }
@@ -122,7 +128,10 @@ export default () => {
   const { getRootProps, getInputProps } = useDropzone({ onDrop })
 
 
-  if (pending) return (<Waiting/>)
+  // console.log(pending)
+  // return (<Waiting stage={WaitingStage.wainting_finish_job} error_message='Un error al procesar el archivo' />)
+
+  if (stage) return (<Waiting stage={stage} error_message={stageError}/>)
 
   return (<div className="h-screen v-screen bg-gray-100 flex" {...getRootProps()}>
     <input {...getInputProps()} />
