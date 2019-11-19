@@ -1,5 +1,5 @@
 import React from 'react';
-import '../statics/styles/main.scss'
+import '../static/styles/main.scss'
 import {useSelector} from 'react-redux';
 
 
