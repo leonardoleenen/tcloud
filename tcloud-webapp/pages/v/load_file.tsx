@@ -3,11 +3,14 @@ import '../../static/styles/main.scss';
 import uuid4 from 'uuid4'
 import { useDropzone } from 'react-dropzone'
 import axios from 'axios'
-import Waiting, {WaitingStage} from '../../components/waiting_load_result'
+import Waiting, { WaitingStage } from '../../components/waiting_load_result'
+//import jsPDF from 'jspdf'
 
 import { useDispatch } from 'react-redux'
 import { loadDocument } from '../../redux/actions/document_viewer';
 import { useRouter } from 'next/router'
+import Webcam from "react-webcam";
+
 
 
 const getRequest = (b64) => {
@@ -76,8 +79,33 @@ const getRequest = (b64) => {
 export default () => {
   const dispatch = useDispatch()
   const router = useRouter()
-  const [stage,setStage] = useState(null)
+  const [stage, setStage] = useState(null)
   const [stageError, setStageError] = useState(null)
+  const [showCamera, setShowCamera] = useState(false)
+
+  
+  const webcamRef = React.useRef(null);
+
+
+  const capture = React.useCallback(
+    () => {
+      const jsPDF = require('jspdf')
+
+      const imageSrc = webcamRef.current.getScreenshot();
+      //upLoad(btoa(imageSrc))
+      const doc = new jsPDF('p', 'pt')
+      doc.addImage(imageSrc, 'JPEG', 0, 0, 640, 480);
+      // console.log(btoa(doc.output()))
+      upLoad(btoa(doc.output()))
+    },
+    [webcamRef]
+  );
+
+  const videoConstraints = {
+    width: 640,
+    height: 480,
+    facingMode: { exact: "environment" }
+  }; 
 
   const getStatus = (job_id: string) => {
     axios.get('http://docker01.leafnoise.io:35000/jobs/status?id=' + job_id).then(result => {
@@ -95,6 +123,19 @@ export default () => {
     })
   }
 
+  const upLoad = (base64) => {
+    const requestToSend = getRequest(base64)
+
+    setStage(WaitingStage.waiting_send_file_response)
+    axios.post('http://docker01.leafnoise.io:35000/jobs/submit', requestToSend).
+      then(result => {
+        setStageError(WaitingStage.wainting_finish_job)
+        setTimeout(() => getStatus(result.data.job_id), 5000)
+      }).catch(error => {
+        setStageError('Ha ocurrido un error al intentar transferir el archivo al server. ')
+        console.log(error)
+      })
+  }
   const onDrop = useCallback(acceptedFiles => {
     const reader = new FileReader()
 
@@ -107,20 +148,7 @@ export default () => {
         new Uint8Array(arrayBuffer as ArrayBuffer)
           .reduce((data, byte) => data + String.fromCharCode(byte), '')
       );
-
-
-      const requestToSend = getRequest(base64)
-
-      setStage(WaitingStage.waiting_send_file_response)
-      axios.post('http://docker01.leafnoise.io:35000/jobs/submit', requestToSend).
-        then(result => {
-        setStageError(WaitingStage.wainting_finish_job)
-        setTimeout(() => getStatus(result.data.job_id), 5000)
-      }).catch ( error => {
-        setStageError('Ha ocurrido un error al intentar transferir el archivo al server. ')
-        console.log(error)
-      })
-
+      upLoad(base64)
     }
 
     acceptedFiles.forEach(file => reader.readAsArrayBuffer(file))
@@ -128,17 +156,29 @@ export default () => {
   const { getRootProps, getInputProps } = useDropzone({ onDrop })
 
 
-  // console.log(pending)
-  // return (<Waiting stage={WaitingStage.wainting_finish_job} error_message='Un error al procesar el archivo' />)
+ 
 
-  if (stage) return (<Waiting stage={stage} error_message={stageError}/>)
+  if (stage) return (<Waiting stage={stage} error_message={stageError} />)
+  if (showCamera) 
+    return (<div>
+      <Webcam
+        audio={false}
+        ref={webcamRef}
+        screenshotFormat="image/jpeg"
+        videoConstraints={videoConstraints}
+      />
+      <button onClick={capture}>Capture photo</button>
+      <button onClick={ () => setShowCamera(false)}>Cancelar</button>
+    </div>)
 
-  return (<div className="h-screen v-screen bg-gray-100 flex" {...getRootProps()}>
-    <input {...getInputProps()} />
 
-    <div className="m-auto cursor-pointer flex-grow max-w-2xl">
+  return (<div className="h-screen v-screen bg-gray-100 flex-cols" >
 
-      <div className="m-auto bg-white shadow-xl p-6">
+
+    <div className="m-auto cursor-pointer flex-grow max-w-2xl" >
+
+      <div className="m-auto bg-white shadow-xl p-6" {...getRootProps()}>
+        <input {...getInputProps()} />
         <div className="p-12 border-dashed border-2 border-gray-400">
           <IconDownload />
           <p className="m-auto text-center text-2xl text-gray-600">Arrastre un archivo aqui</p>
@@ -148,11 +188,12 @@ export default () => {
           </div>
         </div>
       </div>
-      <p className="m-auto mt-6 text-center text-gray-600 text-lg"> O <span className="underline">Seleccione un archivo</span> </p>
 
 
 
     </div>
+    <p className="m-auto mt-6 text-center text-gray-600 text-lg" onClick={() => setShowCamera(true)}> O <span className="underline">Tome una foto con su camara</span> </p>
+
 
   </div>)
 }
