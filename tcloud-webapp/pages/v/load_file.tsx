@@ -133,7 +133,6 @@ export default () => {
         setTimeout(() => getStatus(result.data.job_id), 5000)
       }).catch(error => {
         console.log(error)
-        debugger
         setStageError('Ha ocurrido un error al intentar transferir el archivo al server. ')
         
         
