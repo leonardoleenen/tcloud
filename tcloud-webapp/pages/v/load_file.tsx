@@ -111,7 +111,7 @@ export default () => {
     axios.get('http://docker01.leafnoise.io:35000/jobs/status?id=' + job_id).then(result => {
 
       if (result.data.status != 'FINISHED') {
-        setTimeout(() => getStatus(job_id), 5000)
+        setTimeout(() => getStatus(job_id), 10000)
         return
       }
 
@@ -129,13 +129,11 @@ export default () => {
     setStage(WaitingStage.waiting_send_file_response)
     axios.post('http://docker01.leafnoise.io:35000/jobs/submit', requestToSend).
       then(result => {
-        setStageError(WaitingStage.wainting_finish_job)
-        setTimeout(() => getStatus(result.data.job_id), 5000)
+        setStage(WaitingStage.wainting_finish_job)
+        setTimeout(() => getStatus(result.data.job_id), 10000)
       }).catch(error => {
         console.log(error)
-        setStageError('Ha ocurrido un error al intentar transferir el archivo al server. ')
-        
-        
+        setStageError('Ha ocurrido un error al intentar transferir el archivo al server. ')        
       })
   }
   const onDrop = useCallback(acceptedFiles => {
