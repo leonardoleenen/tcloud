@@ -28,7 +28,6 @@ export default (props:Props) => {
      </div>
     ))}
    
- 
     <style jsx>
       {
         ` .row {
