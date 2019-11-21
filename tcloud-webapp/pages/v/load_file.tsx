@@ -157,8 +157,9 @@ export default () => {
 
 
  
+  
+  if (stage) return (<Waiting stage={stage} error_message={stageError} />) 
 
-  if (stage) return (<Waiting stage={stage} error_message={stageError} />)
   if (showCamera) 
     return (<div>
       <Webcam
@@ -167,32 +168,32 @@ export default () => {
         screenshotFormat="image/jpeg"
         videoConstraints={videoConstraints}
       />
-      <button onClick={capture}>Capture photo</button>
-      <button onClick={ () => setShowCamera(false)}>Cancelar</button>
+      <div className="text-center">
+        <button onClick={capture} className="rounded-lg border bg-indigo-500 text-sm font-semibold text-white px-3 py-2 mx-2">Tomar foto</button>
+        <button className="rounded-lg border border-gray-500 text-sm font-semibold text-gray-500 px-3 py-2 mx-2" onClick={ () => setShowCamera(false)}>Cancelar</button>
+      </div>
     </div>)
 
 
-  return (<div className="h-screen v-screen bg-gray-100 flex-cols" >
+  return (<div className="h-screen v-screen bg-gray-100 flex px-3 md:px-0" >
 
-
-    <div className="m-auto cursor-pointer flex-grow max-w-2xl" >
-
-      <div className="m-auto bg-white shadow-xl p-6" {...getRootProps()}>
-        <input {...getInputProps()} />
-        <div className="p-12 border-dashed border-2 border-gray-400">
-          <IconDownload />
-          <p className="m-auto text-center text-2xl text-gray-600">Arrastre un archivo aqui</p>
-          <div className="flex justify-center">
-            <div className="bg-red-500 ml-1 mx-1 text-white mt-4 px-6 py-1 rounded-lg text-center"> .tiff</div>
-            <div className="bg-red-500 ml-1 mx-1 text-white mt-4 px-6 py-1 rounded-lg text-center"> .jpg</div>
+    <div className="m-auto flex-grow max-w-2xl">
+      <div className="cursor-pointer" >
+        <div className="m-auto bg-white shadow-xl p-6" {...getRootProps()}>
+          <input {...getInputProps()} />
+          <div className="p-12 border-dashed border-2 border-gray-400">
+            <IconDownload />
+            <p className="m-auto text-center text-2xl text-gray-600">Arrastre un archivo aqui</p>
+            <div className="flex justify-center">
+              <div className="bg-red-500 ml-1 mx-1 text-white mt-4 px-6 py-1 rounded-lg text-center"> .tiff</div>
+              <div className="bg-red-500 ml-1 mx-1 text-white mt-4 px-6 py-1 rounded-lg text-center"> .jpg</div>
+            </div>
           </div>
-        </div>
       </div>
 
-
-
+      </div>
+      <p className="m-auto mt-6 text-center text-gray-600 text-lg cursor-pointer" onClick={() => setShowCamera(true)}> O <span className="underline">Tome una foto con su camara</span> </p>
     </div>
-    <p className="m-auto mt-6 text-center text-gray-600 text-lg" onClick={() => setShowCamera(true)}> O <span className="underline">Tome una foto con su camara</span> </p>
 
 
   </div>)
