@@ -94,7 +94,7 @@ export default () => {
       const imageSrc = webcamRef.current.getScreenshot();
       //upLoad(btoa(imageSrc))
       const doc = new jsPDF('p', 'pt')
-      doc.addImage(imageSrc, 'JPEG', 0, 0, 640, 480);
+      doc.addImage(imageSrc, 'JPEG', 0, 0, 720, 480);
       // console.log(btoa(doc.output()))
       upLoad(btoa(doc.output()))
     },
@@ -102,7 +102,7 @@ export default () => {
   );
 
   const videoConstraints = {
-    width: 640,
+    width: 720,
     height: 480,
     facingMode: { exact: "environment" }
   }; 
