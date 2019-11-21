@@ -168,9 +168,9 @@ export default () => {
         screenshotFormat="image/jpeg"
         videoConstraints={videoConstraints}
       />
-      <div className="text-center">
-        <button onClick={capture} className="rounded-lg border bg-indigo-500 text-sm font-semibold text-white px-3 py-2 mx-2">Tomar foto</button>
-        <button className="rounded-lg border border-gray-500 text-sm font-semibold text-gray-500 px-3 py-2 mx-2" onClick={ () => setShowCamera(false)}>Cancelar</button>
+      <div className="text-center py-5">
+        <button onClick={capture} className="rounded-lg border bg-indigo-500 text-sm font-semibold text-white px-6 py-2 mx-2">Tomar foto</button>
+        <button className="rounded-lg border border-gray-500 text-sm font-semibold text-gray-500 px-6 py-2 mx-2" onClick={ () => setShowCamera(false)}>Cancelar</button>
       </div>
     </div>)
 
