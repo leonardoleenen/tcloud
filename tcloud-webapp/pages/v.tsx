@@ -1,22 +1,22 @@
 import React from "react"
 import uuid4 from 'uuid4' 
-import LeftSideBar from '../../components/layout/left_side_bar';
-import RightSideBar from '../../components/layout/rigth_side_bar';
-import DocumentArea from '../../components/layout/document_area';
-import InfoCard from '../../components/info_card';
+import LeftSideBar from '../components/layout/left_side_bar';
+import RightSideBar from '../components/layout/rigth_side_bar';
+import DocumentArea from '../components/layout/document_area';
+import InfoCard from '../components/info_card';
 
-import TagsCard from  '../../components/tags_card';
-import EntityCardDetail from '../../components/entity_card_detail';
+import TagsCard from  '../components/tags_card';
+import EntityCardDetail from '../components/entity_card_detail';
 
 import { useRouter } from 'next/router'
 import {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux'
-import dataProvider from '../../service/index';
+import dataProvider from '../service/index';
 
 
-import {loadDocument} from '../../redux/actions/document_viewer';
+import {loadDocument} from '../redux/actions/document_viewer';
 
-import '../../static/styles/main.scss';
+import '../static/styles/main.scss';
 
 export default () => {
 

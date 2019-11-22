@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../static/styles/main.scss'
+import '../../../static/styles/main.scss'
 import Link from 'next/link'
 
 export default () => {

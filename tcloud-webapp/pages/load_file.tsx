@@ -1,13 +1,13 @@
 import React, { useCallback, useState } from 'react';
-import '../../static/styles/main.scss';
+import '../static/styles/main.scss';
 import uuid4 from 'uuid4'
 import { useDropzone } from 'react-dropzone'
 import axios from 'axios'
-import Waiting, { WaitingStage } from '../../components/waiting_load_result'
+import Waiting, { WaitingStage } from '../components/waiting_load_result'
 //import jsPDF from 'jspdf'
 
 import { useDispatch } from 'react-redux'
-import { loadDocument } from '../../redux/actions/document_viewer';
+import { loadDocument } from '../redux/actions/document_viewer';
 import { useRouter } from 'next/router'
 import Webcam from "react-webcam";
 

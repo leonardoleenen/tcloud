@@ -22,7 +22,8 @@ export default () => {
           Router.push('/pending_invitation')
           return 
         case 'CONFIRMED': 
-          Router.push('/v/error_loading_file','/')
+          Router.push('/v', '/v',{shallow: true})
+          setPending(false)
           break 
         default: 
           Router.push('/error_500')
