@@ -11,7 +11,7 @@ import EntityCardDetail from '../../components/entity_card_detail';
 import { useRouter } from 'next/router'
 import {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux'
-import {dataProvider} from '../../service/index';
+import dataProvider from '../../service/index';
 
 
 import {loadDocument} from '../../redux/actions/document_viewer';

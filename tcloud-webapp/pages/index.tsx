@@ -1,12 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react'
+import dataProvider from '../service/index'
+import { GoogleLogin } from 'react-google-login'
+import Waiting from '../components/waiting'
+import Router from 'next/router'
 
-import { GoogleLogin } from 'react-google-login';
 
 export default () => {
 
+  const [pending, setPending] = useState(false)
+  //const router = useRouter()
+
   const responseGoogle = (response) => {
-    console.log(response);
+    setPending(true)
+    dataProvider.getUser(response.El).then( (u: UserOuttripper) => {
+      if (u === undefined){
+        Router.push('/pending_invitation')
+        return 
+      }
+      switch(u.status) {
+        case 'PENDING':
+          Router.push('/pending_invitation')
+          return 
+        case 'CONFIRMED': 
+          Router.push('/v/error_loading_file','/')
+          break 
+        default: 
+          Router.push('/error_500')
+          return
+      }
+    })
   }
+
+  if (pending) return <Waiting/>
+
+  //console.log('Dibuja')
 
   return (
     <div>
@@ -17,7 +44,7 @@ export default () => {
         onFailure={responseGoogle}
         cookiePolicy={'single_host_origin'}
       />
-      <div className="g-signin2" data-onsuccess="onSignIn"></div>
+      
     </div>
   )
 }

@@ -3,6 +3,14 @@ interface String {
 }
 
 
+
+type UserOuttripper = {
+  id: string
+  status: 'PENDING' | 'CONFIRMED' | 'CANELLED' 
+  cn : string 
+}
+
+
 type LNImage = {
   line: number
   page: number 
@@ -64,8 +72,10 @@ type LNOutputAdapter = {
 }
 
 type LNSRequestSpec = {
-  job_name: string 
+  job_name: string  
   input_spec : LNInputSpec
   pipeline : Array<LNPipelineItem>
   output_spec : LNOutPutSpec
 }
+
+
