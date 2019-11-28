@@ -25,43 +25,116 @@ const getRequest = (b64) => {
     },
     pipeline: [
       {
-        plugin_name: "extract_pdf_images",
-        worker: "CV"
+        plugin_name: 'extract_pdf_images',
+        worker: 'CV'
       },
       {
-        plugin_name: "document_factory.create_document",
-        worker: "CV"
+        plugin_name: 'document_factory.create_document',
+        worker: 'CV'
       },
       {
-        worker: "OCR",
-        plugin_name: "read_document.document_ocr"
+        worker: 'OCR',
+        plugin_name: 'document_ocr.distribute_ocr'
       },
       {
-        plugin_name: "razon_social.plugin",
-        worker: "NLP",
-        input_adapter: {
-          worker: "NLP",
-          plugin_name: "razon_social.input"
+        worker: 'OCR',
+        plugin_name: 'output_adapters.save_reading',
+        meta: {
+          'reading_path': '/var/sources/readings'
         }
       },
       {
-        plugin_name: "socios.plugin",
-        worker: "NLP",
+        plugin_name: 'model_extraction.plugin',
+        job_id: 'job_id',
+        job_name: 'job_name',
+        worker: 'NLP',
         input_adapter: {
-          worker: "NLP",
-          plugin_name: "socios.input"
+          plugin_name: 'model_extraction.input',
+          worker: 'NLP'
         }
       },
       {
-        plugin_name: "tipicidad.plugin",
-        worker: "NLP",
+        plugin_name: 'razon_social.plugin',
+        job_id: 'job_id',
+        job_name: 'job_name',
+        worker: 'NLP',
         input_adapter: {
-          worker: "NLP",
-          plugin_name: "tipicidad.input"
+          plugin_name: 'razon_social.input',
+          worker: 'NLP'
         },
         output_adapter: {
-          plugin_name: "tipicidad.output",
-          worker: "NLP"
+          plugin_name: 'razon_social.output',
+          worker: 'NLP'
+        }
+      },
+      {
+        plugin_name: 'fecha_contrato.plugin',
+        job_id: 'job_id',
+        job_name: 'job_name',
+        worker: 'NLP',
+        input_adapter: {
+          plugin_name: 'fecha_contrato.input',
+          worker: 'NLP'
+        },
+        output_adapter: {
+          plugin_name: 'fecha_contrato.output',
+          worker: 'NLP'
+        }
+      },
+      {
+        plugin_name: 'vigencia.plugin',
+        job_id: 'job_id',
+        job_name: 'job_name',
+        worker: 'NLP',
+        input_adapter: {
+          plugin_name: 'vigencia.input',
+          worker: 'NLP'
+        },
+        output_adapter: {
+          plugin_name: 'vigencia.output',
+          worker: 'NLP'
+        }
+      },
+      {
+        plugin_name: 'capital_social.plugin',
+        job_id: 'job_id',
+        job_name: 'job_name',
+        worker: 'NLP',
+        input_adapter: {
+          plugin_name: 'capital_social.input',
+          worker: 'NLP'
+        },
+        output_adapter: {
+          plugin_name: 'capital_social.output',
+          worker: 'NLP'
+        }
+      },
+      {
+        plugin_name: 'socios.plugin',
+        job_id: 'job_id',
+        job_name: 'job_name',
+        worker: 'NLP',
+        input_adapter: {
+          plugin_name: 'socios.input',
+          worker: 'NLP'
+        },
+        output_adapter: {
+          plugin_name: 'socios.output',
+          worker: 'NLP'
+        }
+      },
+      {
+        plugin_name: 'tipicidad.plugin',
+        job_id: 'job_id',
+        job_name: 'job_name',
+        worker: 'NLP',
+        input_adapter: {
+          plugin_name: 'tipicidad.input',
+          worker: 'NLP'
+        },
+        output_adapter: {
+          plugin_name: 'tipicidad.output',
+          worker: 'NLP'
         }
       }
     ],
@@ -115,11 +188,17 @@ export default () => {
         return
       }
 
-      setStage(WaitingStage.done)
-      axios.get('http://docker01.leafnoise.io:35000/jobs/output?id=' + job_id).then(result => {
-        dispatch(loadDocument(result.data))
-        router.push('/v')
-      })
+      
+      axios.get('http://docker01.leafnoise.io:35000/jobs/output?id=' + job_id)
+        .then(result => {
+          dispatch(loadDocument(result.data))
+          setStage(WaitingStage.done)
+          router.push('/v')
+        })
+        .catch(err => {
+          console.log(err)
+          setStageError("Ha ocurrido un error al intentar recuperar los resultados del archivo procesado")
+        })
     })
   }
 
