@@ -11,6 +11,8 @@ import { loadDocument } from '../../redux/actions/document_viewer';
 import { useRouter } from 'next/router'
 import Webcam from "react-webcam";
 
+const URL_BACKEND="https://ml.leafnoise.io"
+
 
 
 const getRequest = (b64) => {
@@ -181,7 +183,7 @@ export default () => {
   }; 
 
   const getStatus = (job_id: string) => {
-    axios.get('http://docker01.leafnoise.io:35000/jobs/status?id=' + job_id).then(result => {
+    axios.get(URL_BACKEND + '/jobs/status?id=' + job_id).then(result => {
 
       if (result.data.status != 'FINISHED') {
         setTimeout(() => getStatus(job_id), 10000)
@@ -189,7 +191,7 @@ export default () => {
       }
 
       
-      axios.get('http://docker01.leafnoise.io:35000/jobs/output?id=' + job_id)
+      axios.get(URL_BACKEND + '/jobs/output?id=' + job_id)
         .then(result => {
           dispatch(loadDocument(result.data))
           setStage(WaitingStage.done)
@@ -206,7 +208,7 @@ export default () => {
     const requestToSend = getRequest(base64)
 
     setStage(WaitingStage.waiting_send_file_response)
-    axios.post('http://docker01.leafnoise.io:35000/jobs/submit', requestToSend).
+    axios.post(URL_BACKEND + '/jobs/submit', requestToSend).
       then(result => {
         setStage(WaitingStage.wainting_finish_job)
         setTimeout(() => getStatus(result.data.job_id), 10000)
