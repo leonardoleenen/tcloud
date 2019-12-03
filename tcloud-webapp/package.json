@@ -20,6 +20,7 @@
     "next-images": "^1.2.0",
     "node-sass": "^4.13.0",
     "react": "16.11.0",
+    "react-clipboard.js": "^2.0.16",
     "react-dom": "16.11.0",
     "react-dropzone": "^10.1.10",
     "react-google-login": "^5.0.7",

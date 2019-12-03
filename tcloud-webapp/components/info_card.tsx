@@ -33,8 +33,8 @@ export default (props: Props) => {
       <div className='text-base font-semibold text-gray-800 mb-4 mt-4'>Entidades NO detectadas</div>
       {rawEntities.filter((e: LNEntity) => !e.pos && !e.values).map((e: LNEntity) => (
         <div className="bg-white row" key={e.id}>
-          <p className="bg-white text-sm text-gray-600"> {e.display_name}</p>
-          <p className="bg-white text-sm text-gray-600 text-right"> {e.values ? e.values.length : 1} </p>
+          <p className="bg-white text-sm text-red-700"> {e.display_name}</p>
+          
         </div>
       ))}
     </div>
