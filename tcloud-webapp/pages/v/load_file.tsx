@@ -11,7 +11,7 @@ import { loadDocument } from '../../redux/actions/document_viewer';
 import { useRouter } from 'next/router'
 import Webcam from "react-webcam";
 
-const URL_BACKEND="https://ml.leafnoise.io"
+const URL_BACKEND = "https://ml.leafnoise.io"
 
 
 const getRequest = (b64) => {
@@ -24,118 +24,143 @@ const getRequest = (b64) => {
         b64
       }
     },
-    pipeline: [
+    "pipeline": [
       {
-        plugin_name: 'extract_pdf_images',
-        worker: 'CV'
+        "plugin_name": "extract_pdf_images",
+        "worker": "CV"
+
       },
       {
-        plugin_name: 'document_factory.create_document',
-        worker: 'CV'
+        "plugin_name": "document_factory.create_document",
+        "worker": "CV"
       },
       {
-        worker: 'OCR',
-        plugin_name: 'document_ocr.distribute_ocr'
+        "worker": "OCR",
+        "plugin_name": "document_ocr.distribute_ocr"
       },
       {
-        worker: 'OCR',
-        plugin_name: 'output_adapters.save_reading',
-        meta: {
-          'reading_path': '/var/sources/readings'
+        "worker": "OCR",
+        "plugin_name": "output_adapters.save_reading",
+        "meta": {
+          "reading_path": "/var/sources/readings"
         }
       },
       {
-        plugin_name: 'model_extraction.plugin',
-        job_id: 'job_id',
-        job_name: 'job_name',
-        worker: 'NLP',
-        input_adapter: {
-          plugin_name: 'model_extraction.input',
-          worker: 'NLP'
+        "plugin_name": "model_extraction.plugin",
+        "worker": "NLP",
+        "input_adapter": {
+          "plugin_name": "model_extraction.input",
+          "worker": "NLP"
         }
       },
       {
-        plugin_name: 'razon_social.plugin',
-        job_id: 'job_id',
-        job_name: 'job_name',
-        worker: 'NLP',
-        input_adapter: {
-          plugin_name: 'razon_social.input',
-          worker: 'NLP'
+        "plugin_name": "socios.plugin",
+        "worker": "NLP",
+        "input_adapter": {
+          "plugin_name": "socios.input",
+          "worker": "NLP"
         },
-        output_adapter: {
-          plugin_name: 'razon_social.output',
-          worker: 'NLP'
+        "output_adapter": {
+          "plugin_name": "socios.output",
+          "worker": "NLP"
         }
       },
       {
-        plugin_name: 'fecha_contrato.plugin',
-        job_id: 'job_id',
-        job_name: 'job_name',
-        worker: 'NLP',
-        input_adapter: {
-          plugin_name: 'fecha_contrato.input',
-          worker: 'NLP'
+        "plugin_name": "escritura_num.plugin",
+        "worker": "NLP",
+        "input_adapter": {
+          "plugin_name": "escritura_num.input",
+          "worker": "NLP"
         },
-        output_adapter: {
-          plugin_name: 'fecha_contrato.output',
-          worker: 'NLP'
+        "output_adapter": {
+          "plugin_name": "escritura_num.output",
+          "worker": "NLP"
         }
       },
       {
-        plugin_name: 'vigencia.plugin',
-        job_id: 'job_id',
-        job_name: 'job_name',
-        worker: 'NLP',
-        input_adapter: {
-          plugin_name: 'vigencia.input',
-          worker: 'NLP'
+        "plugin_name": "fecha_contrato.plugin",
+        "job_id": "job_id",
+        "job_name": "job_name",
+        "worker": "NLP",
+        "input_adapter": {
+          "plugin_name": "fecha_contrato.input",
+          "worker": "NLP"
         },
-        output_adapter: {
-          plugin_name: 'vigencia.output',
-          worker: 'NLP'
+        "output_adapter": {
+          "plugin_name": "fecha_contrato.output",
+          "worker": "NLP"
         }
       },
       {
-        plugin_name: 'capital_social.plugin',
-        job_id: 'job_id',
-        job_name: 'job_name',
-        worker: 'NLP',
-        input_adapter: {
-          plugin_name: 'capital_social.input',
-          worker: 'NLP'
+        "plugin_name": "razon_social.plugin",
+        "worker": "NLP",
+        "input_adapter": {
+          "plugin_name": "razon_social.input",
+          "worker": "NLP"
         },
-        output_adapter: {
-          plugin_name: 'capital_social.output',
-          worker: 'NLP'
+        "output_adapter": {
+          "plugin_name": "razon_social.output",
+          "worker": "NLP"
         }
       },
       {
-        plugin_name: 'socios.plugin',
-        job_id: 'job_id',
-        job_name: 'job_name',
-        worker: 'NLP',
-        input_adapter: {
-          plugin_name: 'socios.input',
-          worker: 'NLP'
+        "plugin_name": "vigencia.plugin",
+        "worker": "NLP",
+        "input_adapter": {
+          "plugin_name": "vigencia.input",
+          "worker": "NLP"
         },
-        output_adapter: {
-          plugin_name: 'socios.output',
-          worker: 'NLP'
+        "output_adapter": {
+          "plugin_name": "vigencia.output",
+          "worker": "NLP"
         }
       },
       {
-        plugin_name: 'tipicidad.plugin',
-        job_id: 'job_id',
-        job_name: 'job_name',
-        worker: 'NLP',
-        input_adapter: {
-          plugin_name: 'tipicidad.input',
-          worker: 'NLP'
+        "plugin_name": "capital_social.plugin",
+        "worker": "NLP",
+        "input_adapter": {
+          "plugin_name": "capital_social.input",
+          "worker": "NLP"
         },
-        output_adapter: {
-          plugin_name: 'tipicidad.output',
-          worker: 'NLP'
+        "output_adapter": {
+          "plugin_name": "capital_social.output",
+          "worker": "NLP"
+        }
+      },
+      {
+        "plugin_name": "firmantes.plugin",
+        "worker": "NLP",
+        "input_adapter": {
+          "plugin_name": "firmantes.input",
+          "worker": "NLP"
+        },
+        "output_adapter": {
+          "plugin_name": "firmantes.output",
+          "worker": "NLP"
+        }
+      },
+      {
+        "plugin_name": "mandato_dir.plugin",
+        "worker": "NLP",
+        "input_adapter": {
+          "plugin_name": "mandato_dir.input",
+          "worker": "NLP"
+        },
+        "output_adapter": {
+          "plugin_name": "mandato_dir.output",
+          "worker": "NLP"
+        }
+      },
+      {
+        "plugin_name": "tipicidad.plugin",
+        "worker": "NLP",
+        "input_adapter": {
+          "plugin_name": "tipicidad.input",
+          "worker": "NLP"
+        },
+        "output_adapter": {
+          "plugin_name": "tipicidad.output",
+          "worker": "NLP"
         }
       }
     ],
@@ -157,10 +182,10 @@ export default () => {
   const [stageError, setStageError] = useState(null)
   const [showCamera, setShowCamera] = useState(false)
 
-  useEffect( () => {
+  useEffect(() => {
     console.log(process)
   })
-  
+
   const webcamRef = React.useRef(null);
 
 
@@ -182,7 +207,7 @@ export default () => {
     width: 720,
     height: 480,
     facingMode: { exact: "environment" }
-  }; 
+  };
 
   const getStatus = (job_id: string) => {
     axios.get(URL_BACKEND + '/jobs/status?id=' + job_id).then(result => {
@@ -192,7 +217,7 @@ export default () => {
         return
       }
 
-      
+
       axios.get(URL_BACKEND + '/jobs/output?id=' + job_id)
         .then(result => {
           dispatch(loadDocument(result.data))
@@ -216,7 +241,7 @@ export default () => {
         setTimeout(() => getStatus(result.data.job_id), 10000)
       }).catch(error => {
         console.log(error)
-        setStageError('Ha ocurrido un error al intentar transferir el archivo al server. ')        
+        setStageError('Ha ocurrido un error al intentar transferir el archivo al server. ')
       })
   }
   const onDrop = useCallback(acceptedFiles => {
@@ -239,11 +264,11 @@ export default () => {
   const { getRootProps, getInputProps } = useDropzone({ onDrop })
 
 
- 
-  
-  if (stage) return (<Waiting stage={stage} error_message={stageError} />) 
 
-  if (showCamera) 
+
+  if (stage) return (<Waiting stage={stage} error_message={stageError} />)
+
+  if (showCamera)
     return (<div>
       <Webcam
         audio={false}
@@ -253,7 +278,7 @@ export default () => {
       />
       <div className="text-center py-5">
         <button onClick={capture} className="rounded-lg border bg-indigo-500 text-sm font-semibold text-white px-6 py-2 mx-2">Tomar foto</button>
-        <button className="rounded-lg border border-gray-500 text-sm font-semibold text-gray-500 px-6 py-2 mx-2" onClick={ () => setShowCamera(false)}>Cancelar</button>
+        <button className="rounded-lg border border-gray-500 text-sm font-semibold text-gray-500 px-6 py-2 mx-2" onClick={() => setShowCamera(false)}>Cancelar</button>
       </div>
     </div>)
 
@@ -272,7 +297,7 @@ export default () => {
               <div className="bg-red-500 ml-1 mx-1 text-white mt-4 px-6 py-1 rounded-lg text-center"> .jpg</div>
             </div>
           </div>
-      </div>
+        </div>
 
       </div>
       <p className="m-auto mt-6 text-center text-gray-600 text-lg cursor-pointer" onClick={() => setShowCamera(true)}> O <span className="underline">Tome una foto con su camara</span> </p>
