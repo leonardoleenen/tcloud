@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import '../../static/styles/main.scss';
 import uuid4 from 'uuid4'
 import { useDropzone } from 'react-dropzone'
@@ -12,7 +12,6 @@ import { useRouter } from 'next/router'
 import Webcam from "react-webcam";
 
 const URL_BACKEND="https://ml.leafnoise.io"
-
 
 
 const getRequest = (b64) => {
@@ -158,6 +157,9 @@ export default () => {
   const [stageError, setStageError] = useState(null)
   const [showCamera, setShowCamera] = useState(false)
 
+  useEffect( () => {
+    console.log(process)
+  })
   
   const webcamRef = React.useRef(null);
 
