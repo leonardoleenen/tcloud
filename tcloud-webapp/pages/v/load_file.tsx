@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux'
 import { loadDocument } from '../../redux/actions/document_viewer';
 import { useRouter } from 'next/router'
 import Webcam from "react-webcam";
-
+import {cleanDocument} from '../../redux/actions/document_viewer'
 const URL_BACKEND = "https://ml.leafnoise.io"
 
 
@@ -183,7 +183,7 @@ export default () => {
   const [showCamera, setShowCamera] = useState(false)
 
   useEffect(() => {
-    console.log(process)
+    dispatch(cleanDocument())
   })
 
   const webcamRef = React.useRef(null);

@@ -5,8 +5,6 @@ import { useRouter } from 'next/router';
 
 
 const ButtonEvaluar = () => {
-
-
   return <div className="bg-indigo-500 buttonEvaluar mt-4 rounded hover:bg-indigo-700 mb-4 flex ">
     <div className="ml-2 px-2 flex content-center "> <IconCheck /></div>
     <div className=" text-sm font-semibold  text-white inblock-line align-middle">Evaluar </div>
@@ -28,7 +26,6 @@ const ButtonEvaluar = () => {
 
 
 export default () => {
-
   let transactionInfo = {
     file: {
       name:  "FALTA ENVIAR POR CARLOS!!",
@@ -80,7 +77,9 @@ export default () => {
         </article>
       </div>
       <footer className="border-b py-4 border-none">
-          <div className=" h-12 w-12 bg-white border border-indigo-500 rounded-full mr-24 flex  hover:border-indigo-500 " onClick={ () => router.push("/v/load_file") }> <IconAdd/></div>
+          <div className=" h-12 w-12 bg-white border border-indigo-500 rounded-full mr-24 flex  hover:border-indigo-500 " onClick={ () => {
+            router.push("/v/load_file")
+          }}> <IconAdd/></div>
           <div className="h-12 w-12 bg-indigo-500 border border-indigo-500 rounded-full mr-6 flex shadow hover:bg-indigo-700"> <IconSearch/></div>
       </footer>
     </div>

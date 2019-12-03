@@ -1,5 +1,5 @@
 
-import {LOAD_DOCUMENT, UPDATE_ENTITY_DETAIL_LIST, CLEAN_DOCUMENT} from '../reducers/document_viewer';
+import {LOAD_DOCUMENT, UPDATE_ENTITY_DETAIL_LIST, CLEAN_DOCUMENT, initState} from '../reducers/document_viewer';
 
 
 
@@ -40,8 +40,7 @@ export const cleanDocument = () => {
   return (dispatch) => {
     return dispatch({
       type: CLEAN_DOCUMENT,
-      document: {},
-      entity_detail_list: []
+      ...initState
     })
   }
 }
