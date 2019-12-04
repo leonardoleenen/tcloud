@@ -7,7 +7,10 @@ import {documentViewerReducer} from '../redux/reducers/document_viewer';
 
 
 const initialState = {
-  settings:{},
+  settings:{
+    leftPanelIsOpen:true,
+    rightPanelIsOpen: true
+  },
 }
 
 export const settingReducer = (state = initialState.settings, action) => {
