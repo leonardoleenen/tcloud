@@ -1,9 +1,12 @@
 
 import {LOAD_DOCUMENT, UPDATE_ENTITY_DETAIL_LIST, CLEAN_DOCUMENT, initState} from '../reducers/document_viewer';
+import {sortImages} from '../../service'
 
 
 
-export const loadDocument = (document: any) => {
+
+export const loadDocument = (document: LNDocument) => {
+  document.images = sortImages(document.images)  
   return (dispatch) => {
     return dispatch({
       type: LOAD_DOCUMENT,

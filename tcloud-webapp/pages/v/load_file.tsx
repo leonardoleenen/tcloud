@@ -183,7 +183,8 @@ export default () => {
   const [showCamera, setShowCamera] = useState(false)
 
   useEffect(() => {
-    dispatch(cleanDocument())
+    if (!stage)
+      dispatch(cleanDocument())
   })
 
   const webcamRef = React.useRef(null);
