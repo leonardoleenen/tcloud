@@ -1,25 +1,26 @@
 import React, { useState } from 'react'
 import uuid4 from 'uuid4'
 import Clipboard from 'react-clipboard.js';
- 
+
 interface Props {
   entity: LNEntity
 }
 
 
 const renderRows = (isExpanded, e: LNEntity) => {
+  const [entitySelected, setEntitySelected] = useState<LNEntity>(null)
+
   if (!isExpanded)
     return
 
   return (
-    <div ><ul className='renderRowsItem flex'>
+    <div ><ul className='renderRowsItem flex hover:bg-gray-200' onMouseOver={ () => setEntitySelected(e)} onMouseLeave={ () => setEntitySelected(null)}>
       <a href={`#${e.pos ? e.pos[0].page.toString() + e.pos[0].line.toString() : '#'}`}>
-        <li key={uuid4()} className='text-sm text-gray-600 hover:bg-gray-100'>{e.text}</li>
+        <li key={uuid4()} className='text-sm text-gray-600'>{e.text}</li>
       </a>
-      <Clipboard data-clipboard-text={e.text}>
-     
-        <CopyIcon/>
-        </Clipboard>
+
+      {entitySelected  && entitySelected.text === e.text ? <div className="flex justify-end"> <Clipboard data-clipboard-text={e.text}><CopyIcon /></Clipboard> </div>: ''}
+      
 
     </ul>
 
