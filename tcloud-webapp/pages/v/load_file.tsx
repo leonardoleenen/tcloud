@@ -281,7 +281,10 @@ export default () => {
 
 
 
-  if (stage) return (<Waiting stage={stage} error_message={stageError} />)
+  // if (stage) return (<Waiting stage={stage} error_message={stageError} />)
+
+  console.log(stageError)
+  return <Waiting stage={WaitingStage.waiting_send_file_response}/>
 
   // return <NameCallOut/>
 

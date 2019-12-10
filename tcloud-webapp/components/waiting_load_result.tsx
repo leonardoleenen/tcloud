@@ -27,7 +27,7 @@ const renderStatusConfirmationProcess = (props: Props) => {
     case WaitingStage.waiting_send_file_response:
       return <div className='bg-gray-400 rounded-full h-20 w-20  m-auto flex'><IconClock /></div>
     case WaitingStage.wainting_finish_job:
-      if (props.error_message) return  <div className='bg-red-400 rounded-full h-20 w-20  m-auto flex'><IconClock /></div>
+      if (props.error_message) return <div className='bg-red-400 rounded-full h-20 w-20  m-auto flex'><IconClock /></div>
       return <div className='h-20 w-20  m-auto flex'> <IconWaiting /></div>
     default:
       return <div className='bg-green-400 rounded-full h-20 w-20  m-auto flex'><IconClock /></div>
@@ -47,40 +47,51 @@ export default (props: Props) => {
 
   return <div className='bg-gray-100 h-screen flex'>
     <div className='container'>
-      <div className='bg-white flex-1 m-4 rounded-lg shadow-lg px-4 py-8 text-center'>
-        {renderStatusSendFile(props)}
-        <div className={`m-auto text-xl mt-4 mb-3 `}> {props.stage === WaitingStage.waiting_send_file_response && props.error_message ? 'Error de envio' : 'Enviando Archivo'}</div>
-        <div className='m-auto mx-4 text-center'>
-          <span className={`m-auto text-base  ${props.stage === WaitingStage.waiting_send_file_response && props.error_message ? 'text-red-700' : 'text-gray-700'} `} >{props.stage === WaitingStage.waiting_send_file_response && props.error_message ? 'No se ha podido enviar el archivo al servidor por un error en el server. Por favor contacte a personal de soporte' : labelSendFile}
-          </span>
+      <div className="flex-cols m-auto ">
+        <div className="flex justify-center ">
+          <label className="text-base text-gray-500">Estatuto OGA</label>
         </div>
-
-      </div>
-
-
-      <div className='bg-white flex-1 m-4 rounded-lg shadow-lg px-4 py-8 text-center'>
-        {renderStatusConfirmationProcess(props)}
-        <div className={`m-auto text-xl mt-4 mb-3 text-center ${props.stage === WaitingStage.waiting_send_file_response ? 'text-gray-500' : 'text-gray-500'}`} > Confirmación de estado </div>
-        <div className='m-auto mx-4 text-center'>
-          <span className={`m-auto text-base ${textColorConfirmationStatus}`} >Luego del envio se espera confirmación de fin de proceso por parte de server.
-  </span>
+        <div className="m-auto flex justify-center ">
+          <h2 className="text-3xl font-bold"> Procesando ... </h2>
+        </div>
+        <div className="my-4">
+          <span className="text-base text-gray-500">Mientras tanto, podés <span className="text-base font-bold text-indigo-500">ir al inicio</span></span>
         </div>
       </div>
+      <div className="flex">
+        <div className='bg-white flex-1 m-4 rounded-lg shadow-lg px-4 py-8 text-center'>
+          {renderStatusSendFile(props)}
+          <div className={`m-auto text-xl mt-4 mb-3 `}> {props.stage === WaitingStage.waiting_send_file_response && props.error_message ? 'Error de envio' : 'Enviando Archivo'}</div>
+          <div className='m-auto mx-4 text-center'>
+            <span className={`m-auto text-base  ${props.stage === WaitingStage.waiting_send_file_response && props.error_message ? 'text-red-700' : 'text-gray-700'} `} >{props.stage === WaitingStage.waiting_send_file_response && props.error_message ? 'No se ha podido enviar el archivo al servidor por un error en el server. Por favor contacte a personal de soporte' : labelSendFile}
+            </span>
+          </div>
 
-    <style jsx>
-      {
-        `
+        </div>
+
+        <div className='bg-white flex-1 m-4 rounded-lg shadow-lg px-4 py-8 text-center'>
+          {renderStatusConfirmationProcess(props)}
+          <div className={`m-auto text-xl mt-4 mb-3 text-center ${props.stage === WaitingStage.waiting_send_file_response ? 'text-gray-500' : 'text-gray-500'}`} > Confirmación de estado </div>
+          <div className='m-auto mx-4 text-center'>
+            <span className={`m-auto text-base ${textColorConfirmationStatus}`} >Luego del envio se espera confirmación de fin de proceso por parte de server.</span>
+          </div>
+        </div>
+      </div>
+      <style jsx>
+        {
+          `
         @media(min-width: 767px) {
           .container {
-            display: flex;
+            display: grid;
+            margin: auto
           }
         }
         .container {
           margin: auto;
         }
         `
-      }
-    </style>
+        }
+      </style>
     </div>
   </div>
 }
