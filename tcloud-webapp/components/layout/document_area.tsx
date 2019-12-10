@@ -56,7 +56,7 @@ export default () => {
       {`
         .documentArea {
           background-color: white;
-          overflow-y: scroll;
+          overflow-y: auto;
           scroll-behavior: smooth;
           transition-duration: 500ms;
         }
