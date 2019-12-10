@@ -64,9 +64,10 @@ export default () => {
           {leftPanelIsOpen ? <div className="leftPanel IsOpen">
             <InfoCard label="Entidades detectadas" />
             <TagsCard />
-            {entityDetailList.map((e: LNEntity) => <EntityCardDetail entity={e} key={uuid4()} />)}</div> : <div className="leftPanel">
-            <InfoCard label="Entidades detectadas" />
-            <TagsCard />
+            {entityDetailList.map((e: LNEntity) => <EntityCardDetail entity={e} key={uuid4()} />)}</div> : 
+            <div className="leftPanel">
+              <InfoCard label="Entidades detectadas" />
+              <TagsCard />
             {entityDetailList.map((e: LNEntity) => <EntityCardDetail entity={e} key={uuid4()} />)}</div>}
 
 

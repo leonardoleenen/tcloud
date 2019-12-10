@@ -48,7 +48,6 @@ export default (props: Props) => {
 
 
 
-
     <style jsx>
       {
         ` .row {

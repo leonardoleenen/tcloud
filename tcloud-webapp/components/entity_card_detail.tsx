@@ -15,7 +15,7 @@ const renderRows = (isExpanded, e: LNEntity) => {
 
   return (
     <div ><ul className='renderRowsItem flex hover:bg-gray-200' onMouseOver={ () => setEntitySelected(e)} onMouseLeave={ () => setEntitySelected(null)}>
-      <a href={`#${e.pos ? e.pos[0].page.toString() + e.pos[0].line.toString() : '#'}`}>
+      <a href={`#${e.pos && e.pos.length > 0 ? e.pos[0].page.toString() + e.pos[0].line.toString() : '#'}`}>
         <li key={uuid4()} className='text-sm text-gray-600'>{e.text}</li>
       </a>
 
@@ -64,7 +64,10 @@ const EntityCardDetail = (props: Props) => {
   return <div className="bg-white rounded-lg mainContainer py-6 px-4 mt-5 entity-card">
     <header className=" flex">
       <label className="text-base font-semibold text-gray-800 mb-4 w-11/12" >{props.entity.display_name}</label>
-      <div onClick={() => collapase(!isExpanded)} className='cursor-pointer expandIcon bg-gray-200 rounded justify-end w-5 h-5 flex content-center justify-center'>{isExpanded ? <CollapseIcon /> : <ExpandIcon />}</div>
+      <div onClick={() => {
+        console.log(isExpanded)
+        collapase(!isExpanded)
+      }} className='cursor-pointer expandIcon bg-gray-200 rounded justify-end w-5 h-5 flex content-center justify-center'>{isExpanded ? <CollapseIcon /> : <ExpandIcon />}</div>
     </header>
     {props.entity.values ? props.entity.values.map((ev: LNEntityValue) => ev.entities.map((e: LNEntity) => <EntityCardDetail entity={e} key={uuid4()} />)) : renderRows(isExpanded, props.entity)}
 
