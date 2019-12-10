@@ -54,17 +54,20 @@ export default () => {
 
       <div className="workspace">
         <LeftSideBar>
-          {leftPanelIsOpen ? <div className="flex items-center mb-4" onClick={() => dispatch(hideLeftPanel())}>
+          {leftPanelIsOpen ? <div className="flex items-center mb-4 cursor-pointer IconHide" onClick={() => dispatch(hideLeftPanel())}>
             <IconLeftArrow />
             <IconLeftArrow />
-            <label className="mx-4 text-gray-600  ">Ocultar </label>
-          </div> : <div onClick={() => dispatch(showLeftPanel())}><IconMenu /></div>}
+            <label className="mx-4 text-gray-600 cursor-pointer">Ocultar </label>
+          </div> : <div className="cursor-pointer mb-4 IconMenu" onClick={() => dispatch(showLeftPanel())}><IconMenu /></div>}
 
 
-          {leftPanelIsOpen ? <div>
+          {leftPanelIsOpen ? <div className="leftPanel IsOpen">
             <InfoCard label="Entidades detectadas" />
             <TagsCard />
-            {entityDetailList.map((e: LNEntity) => <EntityCardDetail entity={e} key={uuid4()} />)}</div> : ''}
+            {entityDetailList.map((e: LNEntity) => <EntityCardDetail entity={e} key={uuid4()} />)}</div> : <div className="leftPanel">
+            <InfoCard label="Entidades detectadas" />
+            <TagsCard />
+            {entityDetailList.map((e: LNEntity) => <EntityCardDetail entity={e} key={uuid4()} />)}</div>}
 
 
         </LeftSideBar>
@@ -82,6 +85,34 @@ export default () => {
             display: grid;
             grid-template-columns: 1fr 3fr 1fr;
           }
+          .leftPanel {
+            transition: all 250ms ease-in;
+            transform: translateX(-100%);
+            opacity: 0;
+          }
+          .leftPanel.IsOpen {
+            transform: none;
+            opacity: 1;
+          }
+          .IconMenu,
+          .IconHide,
+          .IconHide label {
+            transition: all 200ms ease-in;
+          }
+          .IconMenu:hover {
+            opacity: 0.5;
+            transform: translateX(1.5px);
+          }
+          .IconMenu:active {
+            opacity: 1;
+            transform: none;
+          }
+          .IconHide:hover {
+            opacity: 0.5;
+          }
+          .IconHide:hover label {
+            transform: translateX(-2px)
+          }
           `
         }
       </style>
@@ -97,7 +128,7 @@ const IconLeftArrow = () => (
 )
 
 const IconMenu = () => (
-  <svg width="22" height="14" viewBox="0 0 22 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="22" height="24" viewBox="0 0 22 14" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0 1H22" stroke="#718096" />
     <path d="M0 7H22" stroke="#718096" />
     <path d="M0 13H22" stroke="#718096" />
