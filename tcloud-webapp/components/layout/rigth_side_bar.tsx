@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
 import { useRouter } from 'next/router';
-import { loadDocument } from '../../redux/actions/document_viewer';
+import { loadDocument, hideRightPanel } from '../../redux/actions/document_viewer';
 
 /*
 const ButtonEvaluar = () => {
@@ -47,7 +47,7 @@ export default () => {
     <div className="h-full bg-white pl-4">
       <div className="border-b">
 
-        <ul className='mb-2 flex pt-4'>
+        <ul className='mb-2 flex pt-4' onClick={ () => dispatch(hideRightPanel())}>
           <div className="bg-indigo-100 rounded-lg w-8 h-8    flex content-center justify-center"  ><IconClose /></div>
           <div className='text-sm font-semibold text-gray-600   flex content-center justify-center ml-4 '>Cerrar Info</div>
         </ul >

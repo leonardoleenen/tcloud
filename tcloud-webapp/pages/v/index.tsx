@@ -2,6 +2,7 @@ import React from "react"
 import uuid4 from 'uuid4'
 import LeftSideBar from '../../components/layout/left_side_bar';
 import RightSideBar from '../../components/layout/rigth_side_bar';
+import SkinnyRigthSideBar  from '../../components/layout/skinny_right_side_bar'
 import DocumentArea from '../../components/layout/document_area';
 import InfoCard from '../../components/info_card';
 
@@ -24,7 +25,7 @@ export default () => {
   const dispatch = useDispatch()
   const { documentId } = router.query
   const leftPanelIsOpen = useSelector(state => state.settings.leftPanelIsOpen)
-
+  const rightPanelIsOpen = useSelector(state => state.settings.rightPanelIsOpen)
   useEffect(() => {
     const fetchData = async () => {
       const d = await dataProvider.getDocument(documentId as string)
@@ -68,7 +69,7 @@ export default () => {
 
         </LeftSideBar>
         <DocumentArea />
-        <RightSideBar />
+        {rightPanelIsOpen ? <RightSideBar /> : <SkinnyRigthSideBar/>}
       </div>
 
 
