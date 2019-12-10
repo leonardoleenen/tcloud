@@ -4,6 +4,7 @@ import moment from 'moment';
 import { useRouter } from 'next/router';
 import { loadDocument } from '../../redux/actions/document_viewer';
 
+/*
 const ButtonEvaluar = () => {
   return <div className="bg-indigo-500 buttonEvaluar mt-4 rounded hover:bg-indigo-700 mb-4 flex ">
     <div className="ml-2 px-2 flex content-center "> <IconCheck /></div>
@@ -21,7 +22,7 @@ const ButtonEvaluar = () => {
       }
     </style>
   </div>
-}
+}*/
 
 
 
@@ -75,7 +76,6 @@ export default () => {
             <li className="text-sm font-semibold">% de legibilidad</li>
             <p className="text-sm text-gray-600">{transactionInfo.file.global_health_accuracy}%</p>
           </ul>
-          <ButtonEvaluar />
         </article>
       </div>
       <footer className="border-b py-4 border-none">
@@ -135,13 +135,14 @@ const IconNotification = () => (
 
 )
 
+/*
 const IconCheck = () => (
   <svg style={{ margin: 'auto' }} width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
     <rect width="15" height="15" rx="2.11111" fill="#E5E9FA" />
     <path d="M10.5 3.75L5.85 8.86363L4.5 7.84113H3.75L5.85 11.25L11.25 3.75H10.5Z" fill="#5E81F4" />
   </svg>
 
-)
+)*/
 
 const IconPeople = () => (
   <svg  style={{ margin: 'auto' }}  width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

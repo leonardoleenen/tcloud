@@ -7,6 +7,7 @@ import {sortImages} from '../../service'
 
 export const loadDocument = (document: LNDocument) => {
   document.images = sortImages(document.images)  
+  document.images = sortImages(document.images)  
   return (dispatch) => {
     return dispatch({
       type: LOAD_DOCUMENT,

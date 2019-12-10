@@ -4,17 +4,20 @@ import uuid4 from 'uuid4'
 import { useDropzone } from 'react-dropzone'
 import axios from 'axios'
 import Waiting, { WaitingStage } from '../../components/waiting_load_result'
+// import NameCallOut from '../../components/document_name_callOut'
+
 //import jsPDF from 'jspdf'
 
 import { useDispatch } from 'react-redux'
 import { loadDocument } from '../../redux/actions/document_viewer';
 import { useRouter } from 'next/router'
 import Webcam from "react-webcam";
-import {cleanDocument} from '../../redux/actions/document_viewer'
+import { cleanDocument } from '../../redux/actions/document_viewer'
 const URL_BACKEND = "https://ml.leafnoise.io"
 
 
-const getRequest = (b64) => {
+/*
+const getRequestOld = (b64) => {
   return {
     job_name: uuid4(),
     input_spec: {
@@ -170,6 +173,16 @@ const getRequest = (b64) => {
     }
 
   } as LNSRequestSpec
+}*/
+
+const getRequest = (b64) => {
+  return {
+    job_name: uuid4(),
+    pipeline: "get_pdf_from_meta",
+    meta: {
+      b64
+    }
+  }
 }
 
 
@@ -267,7 +280,10 @@ export default () => {
 
 
 
+
   if (stage) return (<Waiting stage={stage} error_message={stageError} />)
+
+  // return <NameCallOut/>
 
   if (showCamera)
     return (<div>

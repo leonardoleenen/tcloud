@@ -13,9 +13,15 @@ String.prototype.capitalize = function () {
   return this.charAt(0).toUpperCase() + this.slice(1);
 }
 
+
+
+
+
 export default (props: Props) => {
 
   const rawEntities = useSelector(state => state.documentViewer.document.entities) as Array<LNEntity>
+
+  const hasNoDetectedEntities = rawEntities.filter((e: LNEntity) => e.pos && e.pos.length === 0 && !e.values).length > 0
 
   return <div className="bg-white rounded-lg mainContainer py-6 px-4">
 
@@ -29,15 +35,17 @@ export default (props: Props) => {
       ))}
     </div>
 
-    <div>
+
+    {hasNoDetectedEntities ? <div>
       <div className='text-base font-semibold text-gray-800 mb-4 mt-4'>Entidades NO detectadas</div>
-      {rawEntities.filter((e: LNEntity) => !e.pos && !e.values).map((e: LNEntity) => (
+      {rawEntities.filter((e: LNEntity) => e.pos && e.pos.length === 0 && !e.values).map((e: LNEntity) => (
         <div className="bg-white row" key={e.id}>
           <p className="bg-white text-sm text-red-700"> {e.display_name}</p>
-          
+
         </div>
       ))}
-    </div>
+    </div> : ''}
+
 
 
 

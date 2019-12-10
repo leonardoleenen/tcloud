@@ -4,7 +4,8 @@ interface Props {
   value: string
   id: string
   color: string
-  callBackFunc(id: string): void // return id was toggled
+  entity: LNEntity
+  callBackFunc(e: LNEntity): void // return id was toggled
 }
 
 export default (prop: Props) => {
@@ -13,7 +14,16 @@ export default (prop: Props) => {
 
   return <div className={`button border rounded-full border-${prop.color}-700 w-auto  ${toogled ? 'text-white bg-' + prop.color + '-500' : 'text-' + prop.color + '-500  bg-white'}`} onClick={() => {
     setToggled(!toogled)
-    prop.callBackFunc(prop.id)
+    prop.callBackFunc(prop.entity)
+    if (!toogled){
+      if (prop.entity.values) {
+        const pos = prop.entity.values[0]['entities'][0]['pos'][0]
+        window.location.href=`#${pos.page.toString() + pos.line.toString() }`
+      }else {
+        window.location.href=`#${prop.entity.pos ? prop.entity.pos[0].page.toString() + prop.entity.pos[0].line.toString() : '#'}`
+      }
+    }
+      
   }}>
     <div className={`textAvatar rounded-full bg-${prop.color}-700 text-sm text-white flex items-center justify-center `}>{prop.value.trim().split(" ").map(a => a[0].toUpperCase()).join("")}</div>
     <label className={`ml-2 mr-4 cursor-pointer text-center text-sm font-semibold ${toogled ? 'text-white bg-' + prop.color + '-500' : 'text-' + prop.color + '-500  bg-white'} `} >{prop.value}</label>

@@ -14,8 +14,8 @@ export default () => {
   const rawEntities = useSelector( state => state.documentViewer.document.entities) as Array<LNEntity>
   const dispatch = useDispatch()
 
-   const selectItem = (id: string) => {
-    dispatch(updateEntityDetailList(id))
+   const selectItem = (e: LNEntity) => {
+    dispatch(updateEntityDetailList(e.id))
   }
 
  
@@ -23,7 +23,7 @@ export default () => {
   return <div className="bg-white rounded-lg mainContainer py-6 px-4 mt-5"> 
     <div className="text-base font-semibold text-gray-800 mb-4">Marcadores</div>
     <article> 
-      {rawEntities.filter( (e: LNEntity) => e.pos || e.values).map( (e:LNEntity, index: number) => <ToggleButton callBackFunc={selectItem} value={e.display_name} color={colors[index]} id={e.id} key={e.id} />) }
+      {rawEntities.filter( (e: LNEntity) => (e.pos && e.pos.length >0) || e.values).map( (e:LNEntity, index: number) => <ToggleButton callBackFunc={selectItem} value={e.display_name} color={colors[index]} id={e.id} key={e.id} entity={e} />) }
     </article>
 
     <style jsx>
