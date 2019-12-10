@@ -7,18 +7,34 @@ export default () => {
   const dispatch = useDispatch()
   const router = useRouter()
   return <div className="flex justify-end">
-    <div className="w-16 bg-white">
-      <div className="bg-indigo-100 w-8 h-8 rounded m-auto mt-4 flex item-center" onClick={() => dispatch(showRightPanel())}><IconInfo /></div>
-      <div className="bg-indigo-100 w-8 h-8 rounded m-auto mt-4 flex item-center"> <IconNotification /> </div>
+    <div className="w-12 bg-white pt-4 fixed top-0 right-0 bottom-0 navDesplegable">
+      <div className="bg-indigo-100 w-8 h-8 rounded m-auto flex item-center mb-2 cursor-pointer Icon" onClick={() => dispatch(showRightPanel())}><IconInfo /></div>
+      <div className="bg-indigo-100 w-8 h-8 rounded m-auto flex item-center cursor-pointer Icon"> <IconNotification /> </div>
 
-      <footer className="border-b py-4 border-none  ">
-        <div className=" m-auto h-8 w-8 bg-white border border-indigo-500 rounded-full mr-24 flex  hover:border-indigo-500 " onClick={() => {
+      <footer className="border-b py-4 border-none absolute bottom-0 left-0 right-0">
+        <div className=" m-auto h-8 w-8 bg-white border border-indigo-500 rounded-full flex mb-2 cursor-pointer Icon" onClick={() => {
           router.push("/v/load_file")
         }}> <IconAdd /></div>
-        <div className="h-8 w-8 bg-indigo-500 border border-indigo-500 rounded-full mr-6 flex shadow hover:bg-indigo-700"> <IconSearch /></div>
+        <div className="m-auto h-8 w-8 bg-indigo-500 border border-indigo-500 rounded-full flex shadow cursor-pointer Icon"> <IconSearch /></div>
       </footer>
 
     </div>
+    <style jsx>
+      {
+        `
+          .Icon {
+            transition: all 150ms ease-in;
+          }
+          .Icon:hover {
+            opacity: 0.7;
+            transform: translateY(-1px)
+          }
+          .navDesplegable {
+            border-left: 1px solid rgba(200, 201, 233, 0.35);
+          }
+        `
+      }
+    </style>
   </div>
 }
 

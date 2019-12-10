@@ -44,45 +44,47 @@ export default () => {
   const router = useRouter()
 
   return <div className="ml-5 navDesplegable">
-    <div className="h-full bg-white pl-4">
-      <div className="border-b">
+    <div className="h-full bg-white pl-4 pt-5">
+      <div className="border-b pb-5">
 
-        <ul className='mb-2 flex pt-4' onClick={ () => dispatch(hideRightPanel())}>
+        <ul className="my-3 flex items-center cursor-pointer Icon" onClick={ () => dispatch(hideRightPanel())}>
           <div className="bg-indigo-100 rounded-lg w-8 h-8    flex content-center justify-center"  ><IconClose /></div>
           <div className='text-sm font-semibold text-gray-600   flex content-center justify-center ml-4 '>Cerrar Info</div>
         </ul >
-        <ul className=" mb-2 flex">
+        <ul className="my-3 flex items-center cursor-pointer Icon">
           <div className="bg-indigo-100 rounded-lg w-8 h-8 flex content-center justify-center"><IconNotification /></div>
           <div className='text-sm font-semibold text-gray-600 flex content-center justify-center  ml-4'>Notificaciones</div>
         </ul>
-        <ul className=" mb-2 flex pb-4">
+        <ul className="my-3 flex items-center cursor-pointer Icon">
           <div className="bg-indigo-100 rounded-lg w-8 h-8 flex content-center justify-center"><IconPeople/></div>
           <div className='text-sm font-semibold text-gray-600 flex content-center justify-center  ml-4'>Usuario</div>
         </ul>
 
       </div>
-      <div className="border-b mt-4">
-        <header className="text-base font-semibold  py-4"> Información general </header>
+      <div className="border-b py-6">
+        <header className="text-base font-semibold mb-3">Información general</header>
         <article>
           <ul className="mt-2">
-            <li className="text-sm font-semibold">Nombre de archivo</li>
-            <p className="text-sm text-gray-600">{transactionInfo.file.name}</p>
-          </ul>
-          <ul className="mt-2" >
-            <li className="text-sm font-semibold">Fecha de subida</li>
-            <p className="text-sm text-gray-600">{moment(transactionInfo.request_by.requested_at * 1000).format('Do MMM YYYY HH:mma')}</p>
-          </ul>
-          <ul className="mt-2">
-            <li className="text-sm font-semibold">% de legibilidad</li>
-            <p className="text-sm text-gray-600">{transactionInfo.file.global_health_accuracy}%</p>
+            <li className="text-sm font-semibold relative pl-4 my-2">
+              <label className="block">Nombre de archivo</label>
+              <p className="text-sm text-gray-600">{transactionInfo.file.name}</p>
+            </li>
+            <li className="text-sm font-semibold relative pl-4 my-2">
+              <label>Fecha de subida</label>
+              <p className="text-sm text-gray-600">{moment(transactionInfo.request_by.requested_at * 1000).format('Do MMM YYYY HH:mma')}</p>
+            </li>
+            <li className="text-sm font-semibold relative pl-4 my-2">
+              <label>% de legibilidad</label>
+              <p className="text-sm text-gray-600">{transactionInfo.file.global_health_accuracy}%</p>
+            </li>
           </ul>
         </article>
       </div>
       <footer className="border-b py-4 border-none">
-          <div className=" h-12 w-12 bg-white border border-indigo-500 rounded-full mr-24 flex  hover:border-indigo-500 " onClick={ () => {
+          <div className=" h-12 w-12 bg-white border border-indigo-500 rounded-full flex cursor-pointer Icon" onClick={ () => {
             router.push("/v/load_file")
           }}> <IconAdd/></div>
-          <div className="h-12 w-12 bg-indigo-500 border border-indigo-500 rounded-full mr-6 flex shadow hover:bg-indigo-700" onClick={ () => dispatch(loadDocument(document))}> <IconSearch/></div>
+          <div className="h-12 w-12 bg-indigo-500 border border-indigo-500 rounded-full flex shadow cursor-pointer Icon" onClick={ () => dispatch(loadDocument(document))}> <IconSearch/></div>
       </footer>
     </div>
     <style jsx>
@@ -91,13 +93,9 @@ export default () => {
           footer {
             display: grid; 
             grid-template-columns: 1fr 1fr;
-            
+            justify-items: center;
           }
 
-          footer div {
-            margin: auto;
-            
-          }
           .menu {
               display: grid;
               grid-template-rows: 150px 312px 60%
@@ -109,9 +107,20 @@ export default () => {
             display: inline-block; 
             font-size: 1.5em; 
             width: 0.8em;
+            position: absolute;
+            left: 0;
+            top: 0;
+            line-height: 23px;
           }
           .navDesplegable {
-            border-left: 1px solid rgba(200, 201, 233, 0.35)
+            border-left: 1px solid rgba(200, 201, 233, 0.35);
+          }
+          .Icon {
+            transition: all 150ms ease-in;
+          }
+          .Icon:hover {
+            opacity: 0.7;
+            transform: translateY(-1px)
           }
         `
       }
