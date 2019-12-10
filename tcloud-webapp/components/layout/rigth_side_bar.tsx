@@ -43,8 +43,8 @@ export default () => {
   const document : LNDocument = useSelector( state => state.documentViewer.document)
   const router = useRouter()
 
-  return <div className="ml-5 navDesplegable">
-    <div className="h-full bg-white pl-4 pt-5">
+  return <div className="ml-5 RightSideBar h-screen sticky top-0 overflow-auto bg-white">
+    <div className="pl-4 pt-5 relative">
       <div className="border-b pb-5">
 
         <ul className="my-3 flex items-center cursor-pointer Icon" onClick={ () => dispatch(hideRightPanel())}>
@@ -80,6 +80,7 @@ export default () => {
           </ul>
         </article>
       </div>
+
       <footer className="border-b py-4 border-none">
           <div className=" h-12 w-12 bg-white border border-indigo-500 rounded-full flex cursor-pointer Icon" onClick={ () => {
             router.push("/v/load_file")
@@ -112,8 +113,11 @@ export default () => {
             top: 0;
             line-height: 23px;
           }
-          .navDesplegable {
+          .RightSideBar {
             border-left: 1px solid rgba(200, 201, 233, 0.35);
+          }
+          .RightSideBar::-webkit-scrollbar {
+            display: none;
           }
           .Icon {
             transition: all 150ms ease-in;
