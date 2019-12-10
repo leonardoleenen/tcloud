@@ -54,10 +54,10 @@ export default () => {
 
       <div className="workspace">
         <LeftSideBar>
-          {leftPanelIsOpen ? <div className="flex" onClick={() => dispatch(hideLeftPanel())}>
+          {leftPanelIsOpen ? <div className="flex items-center mb-4" onClick={() => dispatch(hideLeftPanel())}>
             <IconLeftArrow />
             <IconLeftArrow />
-            <label className="mx-4 ">Ocultar </label>
+            <label className="mx-4 text-gray-600  ">Ocultar </label>
           </div> : <div onClick={() => dispatch(showLeftPanel())}><IconMenu /></div>}
 
 
