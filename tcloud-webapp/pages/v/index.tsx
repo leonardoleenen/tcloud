@@ -58,7 +58,7 @@ export default () => {
             <IconLeftArrow />
             <IconLeftArrow />
             <label className="mx-4 text-gray-600 cursor-pointer">Ocultar </label>
-          </div> : <div className="cursor-pointer mb-4 IconMenu" onClick={() => dispatch(showLeftPanel())}><IconMenu /></div>}
+          </div> : <div className="cursor-pointer mb-4 IconMenu fixed" onClick={() => dispatch(showLeftPanel())}><IconMenu /></div>}
 
 
           {leftPanelIsOpen ? <div className="leftPanel IsOpen">
@@ -90,10 +90,12 @@ export default () => {
             transition: all 250ms ease-in;
             transform: translateX(-100%);
             opacity: 0;
+            overflow: hidden;
           }
           .leftPanel.IsOpen {
             transform: none;
             opacity: 1;
+            overflow: auto;
           }
           .IconMenu,
           .IconHide,
