@@ -2,6 +2,9 @@
 export const LOAD_DOCUMENT = 'LOAD_DOCUMENT'
 export const UPDATE_ENTITY_DETAIL_LIST = 'UPDATE_ENTITY_DETAIL_LIST'
 export const CLEAN_DOCUMENT = "CLEAN_DOCUMENT"
+export const SHOW_LEFT_PANEL = "SHOW_LEFT_PANEL"
+export const HIDE_LEFT_PANEL = "HIDE_LEFT_PANEL"
+
 
 export const initState  = { document: null, entity_detail_list:[], job_id: null }
 

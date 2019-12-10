@@ -1,5 +1,5 @@
 
-import {LOAD_DOCUMENT, UPDATE_ENTITY_DETAIL_LIST, CLEAN_DOCUMENT, initState} from '../reducers/document_viewer';
+import {LOAD_DOCUMENT, UPDATE_ENTITY_DETAIL_LIST, CLEAN_DOCUMENT, initState, SHOW_LEFT_PANEL, HIDE_LEFT_PANEL} from '../reducers/document_viewer';
 import {sortImages} from '../../service'
 
 
@@ -45,6 +45,22 @@ export const cleanDocument = () => {
     return dispatch({
       type: CLEAN_DOCUMENT,
       ...initState
+    })
+  }
+}
+
+export const showLeftPanel = () => {
+  return (dispatch) => {
+    return dispatch({
+      type: SHOW_LEFT_PANEL
+    })
+  }
+}
+
+export const hideLeftPanel = () => {
+  return (dispatch) => {
+    return dispatch({
+      type: HIDE_LEFT_PANEL
     })
   }
 }

@@ -4,7 +4,7 @@ import thunkMiddleware from 'redux-thunk'
 import { combineReducers } from 'redux';
 //import {userReducer,signUpReducer} from '../redux/reducers/user';
 import {documentViewerReducer} from '../redux/reducers/document_viewer';
-
+import {SHOW_LEFT_PANEL,HIDE_LEFT_PANEL} from '../redux/reducers/document_viewer'
 
 const initialState = {
   settings:{
@@ -15,6 +15,10 @@ const initialState = {
 
 export const settingReducer = (state = initialState.settings, action) => {
   switch (action.type) {
+    case SHOW_LEFT_PANEL:
+      return {...state,leftPanelIsOpen: true}
+    case HIDE_LEFT_PANEL:
+        return {...state,leftPanelIsOpen: false}
     default:
       return state
   }
