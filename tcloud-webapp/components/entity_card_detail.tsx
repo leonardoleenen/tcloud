@@ -14,12 +14,12 @@ const renderRows = (isExpanded, e: LNEntity) => {
     return
 
   return (
-    <div ><ul className='renderRowsItem flex hover:bg-gray-200' onMouseOver={ () => setEntitySelected(e)} onMouseLeave={ () => setEntitySelected(null)}>
+    <div ><ul className='renderRowsItem flex hover:bg-gray-200 justify-between relative' onMouseOver={ () => setEntitySelected(e)} onMouseLeave={ () => setEntitySelected(null)}>
       <a href={`#${e.pos && e.pos.length > 0 ? e.pos[0].page.toString() + e.pos[0].line.toString() : '#'}`}>
         <li key={uuid4()} className='text-sm text-gray-600'>{e.text}</li>
       </a>
 
-      {entitySelected  && entitySelected.text === e.text ? <div className="flex justify-end"> <Clipboard data-clipboard-text={e.text}><CopyIcon /></Clipboard> </div>: ''}
+      {entitySelected  && entitySelected.text === e.text ? <div className="flex items-center absolute right-0 top-0"> <Clipboard className="mr-1 cursor-pointer" data-clipboard-text={e.text}><CopyIcon /></Clipboard> <EditIcon /> </div>: ''}
       
 
     </ul>
@@ -139,7 +139,6 @@ const ExpandIcon = () => (
 
 )
 
-
 const CopyIcon = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g id="Icon/Outline/copy">
@@ -153,6 +152,14 @@ const CopyIcon = () => (
         </g>
       </g>
     </g>
+  </svg>
+)
+
+const EditIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="1" y="1" width="18" height="18" rx="4" stroke="#718096" stroke-width="2"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M10 13.5C10 13.2239 10.1513 13 10.3378 13H14.6622C14.8487 13 15 13.2239 15 13.5C15 13.7761 14.8487 14 14.6622 14H10.3378C10.1513 14 10 13.7761 10 13.5Z" fill="#718096" stroke="#718096" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M12.628 5.6831C12.4453 5.6831 12.2701 5.75568 12.1409 5.88488L6.13573 11.89L5.81098 13.189L7.10999 12.8643L13.1151 6.85914C13.1791 6.79517 13.2298 6.71922 13.2645 6.63564C13.2991 6.55206 13.3169 6.46248 13.3169 6.37201C13.3169 6.28154 13.2991 6.19196 13.2645 6.10838C13.2298 6.02479 13.1791 5.94885 13.1151 5.88488C13.0512 5.82091 12.9752 5.77016 12.8916 5.73554C12.808 5.70092 12.7185 5.6831 12.628 5.6831ZM11.6578 5.40185C11.9151 5.14455 12.2641 5 12.628 5C12.8082 5 12.9866 5.03549 13.153 5.10444C13.3195 5.17339 13.4707 5.27445 13.5981 5.40185C13.7256 5.52925 13.8266 5.6805 13.8956 5.84696C13.9645 6.01342 14 6.19183 14 6.37201C14 6.55218 13.9645 6.73059 13.8956 6.89705C13.8266 7.06351 13.7256 7.21476 13.5981 7.34217L7.52612 13.4142C7.48235 13.458 7.4275 13.489 7.36745 13.504L5.4244 13.9898C5.30801 14.0189 5.18488 13.9848 5.10005 13.9C5.01521 13.8151 4.98111 13.692 5.01021 13.5756L5.49597 11.6326C5.51098 11.5725 5.54203 11.5177 5.58581 11.4739L11.6578 5.40185Z" fill="#718096" stroke="#718096" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>
 )
 
