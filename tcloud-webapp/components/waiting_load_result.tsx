@@ -51,11 +51,11 @@ export default (props: Props) => {
         <div className="flex justify-center ">
           <label className="text-base text-gray-500">Estatuto OGA</label>
         </div>
-        <div className="m-auto flex justify-center ">
-          <h2 className="text-3xl font-bold"> Procesando ... </h2>
+        <div className="m-auto flex justify-center mb-3">
+          <h2 className="text-3xl font-bold text-gray-900"> Procesando...</h2>
         </div>
-        <div className="my-4">
-          <span className="text-base text-gray-500">Mientras tanto, podés <span className="text-base font-bold text-indigo-500">ir al inicio</span></span>
+        <div className="mb-8">
+          <span className="text-base text-gray-500">Mientras tanto, podés <span className="text-base font-bold text-indigo-500 cursor-pointer btn">ir al inicio</span></span>
         </div>
       </div>
       <div className="flex">
@@ -88,6 +88,13 @@ export default (props: Props) => {
         }
         .container {
           margin: auto;
+        }
+        .btn {
+          transition: all 200ms ease-in;
+          text-decoration: underline;
+        }
+        .btn:hover {
+          opacity: 0.7;
         }
         `
         }
