@@ -12,6 +12,7 @@ export default () => {
 
   const entitiesSelected = useSelector(state => state.documentViewer.entity_detail_list) as Array<LNEntity>
   const rawEntities = useSelector(state => state.documentViewer.document.entities) as Array<LNEntity>
+  // const currentPage : number = null
 
   const hasEntitySelected = (image: LNImage): LNEntity => {
     let hasSelected: LNEntity = null
@@ -37,18 +38,17 @@ export default () => {
     return color
   }
 
-
-
-
-
-
   const images = useSelector(state => state.documentViewer.document.images) as Array<LNImage>
 
   return <div className='documentArea mt-4 pb-12'>
 
-    {images.map((i: LNImage) => <div className="relative ">
+    {images.map((i: LNImage,index)  => <div className="relative ">
       <div id={`${i.page}${i.line}`} className={hasEntitySelected(i) ? `bg-${determineStyle(i.page, i.line)}-500 absolute h-full w-full opacity-25` : ''} > {true} </div>
       <img src={`data:image/png;base64,${i.b64}`} key={uuid4()} />
+      {index!=0 && images[index-1].page != i.page ? 
+      <div className="bg-gray-100 w-full  h-16 flex">
+          <span className="m-auto "> Página {i.page} de {_.last(images).page}</span> 
+      </div> : ''}
 
     </div>)}
 
