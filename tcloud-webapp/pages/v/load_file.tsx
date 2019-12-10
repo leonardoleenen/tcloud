@@ -281,10 +281,11 @@ export default () => {
 
 
 
-  // if (stage) return (<Waiting stage={stage} error_message={stageError} />)
+  if (stage) return (<Waiting stage={stage} error_message={stageError} />)
 
-  console.log(stageError)
-  return <Waiting stage={WaitingStage.waiting_send_file_response}/>
+  // Juan martin, descomentá esta linea y comentá la 284 si queres trabjar sobre el waiting  
+  // console.log(stageError)
+  // return <Waiting stage={WaitingStage.waiting_send_file_response}/>
 
   // return <NameCallOut/>
 
