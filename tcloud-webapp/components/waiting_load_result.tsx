@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 
 export enum WaitingStage {
   waiting_send_file_response = 'WAITING SEND FILE RESPONSE ',
@@ -9,6 +10,7 @@ export enum WaitingStage {
 interface Props {
   stage: WaitingStage,
   error_message?: string
+  documentName?: string
 }
 
 
@@ -49,14 +51,20 @@ export default (props: Props) => {
     <div className='container'>
       <div className="flex-cols m-auto ">
         <div className="flex justify-center ">
-          <label className="text-base text-gray-500">Estatuto OGA</label>
+          <label className="text-base text-gray-500">{props.documentName}</label>
         </div>
         <div className="m-auto flex justify-center mb-3">
           <h2 className="text-3xl font-bold text-gray-900"> Procesando...</h2>
         </div>
-        <div className="mb-8">
-          <span className="text-base text-gray-500">Mientras tanto, podés <span className="text-base font-bold text-indigo-500 cursor-pointer btn">ir al inicio</span></span>
-        </div>
+
+        {props.stage === WaitingStage.wainting_finish_job ? <div className="mb-8">
+          <span className="text-base text-gray-500">Mientras tanto, podés 
+            <Link href="/v/document_explorer">
+              <span className="text-base font-bold text-indigo-500 cursor-pointer btn"> ir al inicio</span>
+            </Link>
+          </span>
+        </div> : ''}
+        
       </div>
       <div className="flex">
         <div className='bg-white flex-1 m-4 rounded-lg shadow-lg px-4 py-8 text-center'>

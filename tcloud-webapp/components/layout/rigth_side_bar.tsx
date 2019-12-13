@@ -2,7 +2,8 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
 import { useRouter } from 'next/router';
-import { loadDocument, hideRightPanel } from '../../redux/actions/document_viewer';
+import Link from 'next/link';
+import {hideRightPanel} from '../../redux/actions/document_viewer'
 
 /*
 const ButtonEvaluar = () => {
@@ -40,7 +41,7 @@ export default () => {
   }
 
   transactionInfo = useSelector(state => state.documentViewer.document.transaction_info ? state.documentViewer.document.transaction_info : transactionInfo)
-  const document : LNDocument = useSelector( state => state.documentViewer.document)
+ 
   const router = useRouter()
 
   return <div className="ml-5 RightSideBar h-screen sticky top-0 overflow-auto bg-white">
@@ -85,7 +86,9 @@ export default () => {
           <div className=" h-12 w-12 bg-white border border-indigo-500 rounded-full flex cursor-pointer Icon" onClick={ () => {
             router.push("/v/load_file")
           }}> <IconAdd/></div>
-          <div className="h-12 w-12 bg-indigo-500 border border-indigo-500 rounded-full flex shadow cursor-pointer Icon" onClick={ () => dispatch(loadDocument(document))}> <IconSearch/></div>
+          <Link href="/v/document_explorer">
+            <div className="h-12 w-12 bg-indigo-500 border border-indigo-500 rounded-full flex shadow cursor-pointer Icon"> <IconSearch/></div>
+          </Link>
       </footer>
     </div>
     <style jsx>

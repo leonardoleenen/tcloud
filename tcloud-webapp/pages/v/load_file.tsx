@@ -4,7 +4,7 @@ import uuid4 from 'uuid4'
 import { useDropzone } from 'react-dropzone'
 import axios from 'axios'
 import Waiting, { WaitingStage } from '../../components/waiting_load_result'
-// import NameCallOut from '../../components/document_name_callOut'
+import NameCallOut from '../../components/document_name_callOut'
 
 //import jsPDF from 'jspdf'
 
@@ -194,6 +194,10 @@ export default () => {
   const [stage, setStage] = useState(null)
   const [stageError, setStageError] = useState(null)
   const [showCamera, setShowCamera] = useState(false)
+  const [showCallOut, setShowCallOut] = useState(false)
+  const [documentReference, setDocumentReference] = useState('')
+
+  const [fileToUpload, setFileToUpload] = useState(null)
 
   useEffect(() => {
     if (!stage)
@@ -212,7 +216,8 @@ export default () => {
       const doc = new jsPDF('p', 'pt')
       doc.addImage(imageSrc, 'JPEG', 0, 0, 720, 480);
       // console.log(btoa(doc.output()))
-      upLoad(btoa(doc.output()))
+      setFileToUpload(btoa(doc.output()) )
+      upLoad()
     },
     [webcamRef]
   );
@@ -231,7 +236,7 @@ export default () => {
         return
       }
 
-
+     
       axios.get(URL_BACKEND + '/jobs/output?id=' + job_id)
         .then(result => {
           dispatch(loadDocument(result.data))
@@ -245,19 +250,29 @@ export default () => {
     })
   }
 
-  const upLoad = (base64) => {
-    const requestToSend = getRequest(base64)
+  const upLoad = () => {
+    const requestToSend = getRequest(fileToUpload)
 
     setStage(WaitingStage.waiting_send_file_response)
     axios.post(URL_BACKEND + '/jobs/submit', requestToSend).
       then(result => {
         setStage(WaitingStage.wainting_finish_job)
-        setTimeout(() => getStatus(result.data.job_id), 10000)
+        const job_id : string  = result.data.job_id
+        pushDocumentInQueue(job_id)
+        setTimeout(() => getStatus(job_id), 10000)
       }).catch(error => {
         console.log(error)
         setStageError('Ha ocurrido un error al intentar transferir el archivo al server. ')
       })
   }
+
+  const pushDocumentInQueue = (job_id: string) => {
+    axios.post('https://us-central1-tcloud-261610.cloudfunctions.net/pushRequest',{
+      job_id: job_id,
+      reference: documentReference
+    })
+  }
+
   const onDrop = useCallback(acceptedFiles => {
     const reader = new FileReader()
 
@@ -270,7 +285,9 @@ export default () => {
         new Uint8Array(arrayBuffer as ArrayBuffer)
           .reduce((data, byte) => data + String.fromCharCode(byte), '')
       );
-      upLoad(base64)
+      setFileToUpload(base64)
+      setShowCallOut(true)
+      //upLoad(base64)
     }
 
     acceptedFiles.forEach(file => reader.readAsArrayBuffer(file))
@@ -280,14 +297,12 @@ export default () => {
 
 
 
+  if (showCallOut) return  <NameCallOut handler={setDocumentReference} value={documentReference} show={showCallOut} setShow={setShowCallOut} lastCall={upLoad} />
+ 
+  if (stage) return (<Waiting stage={stage} error_message={stageError} documentName={documentReference} />)
 
-  if (stage) return (<Waiting stage={stage} error_message={stageError} />)
-
-  // Juan martin, descomentá esta linea y comentá la 284 si queres trabjar sobre el waiting  
-  // console.log(stageError)
-  // return <Waiting stage={WaitingStage.waiting_send_file_response}/>
-
-  // return <NameCallOut/>
+  
+  
 
   if (showCamera)
     return (<div>

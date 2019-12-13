@@ -9,9 +9,12 @@ interface IDataProvider {
 
 class DataProvider implements IDataProvider {
   getDocument(documentId: string): Promise<any> {
-    return axios.get('https://ipfs.io/ipfs/' + documentId)
-    // return axios.get('https://api.myjson.com/bins/' + documentId)
-    //return axios.get('http://127.0.0.1:8080/ipfs/' + documentId)
+    console.log(documentId)
+    return axios.get('https://storage.googleapis.com/tcloud-261610.appspot.com/' + documentId)
+    
+    /*return fetch('https://storage.googleapis.com/tcloud-261610.appspot.com/' + documentId).then( response => response.text().then( text => {
+      return text
+    }))*/
   }
 }
 

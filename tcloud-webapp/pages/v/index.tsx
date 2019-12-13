@@ -29,10 +29,7 @@ export default () => {
   useEffect(() => {
     const fetchData = async () => {
       const d = await dataProvider.getDocument(documentId as string)
-
-      dispatch(loadDocument(d.data[Object.keys(d.data)[0]]))
-
-      // setEntities(d.data)
+      dispatch(loadDocument(d.data))
     }
 
     if (documentId)

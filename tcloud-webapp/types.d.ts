@@ -1,3 +1,11 @@
+declare module "worker-loader!*" {
+  class WebpackWorker extends Worker {
+    constructor();
+  }
+
+  export default WebpackWorker;
+}
+
 interface String {
   capitalize(): string
 }
@@ -69,3 +77,4 @@ type LNSRequestSpec = {
   pipeline : Array<LNPipelineItem>
   output_spec : LNOutPutSpec
 }
+
