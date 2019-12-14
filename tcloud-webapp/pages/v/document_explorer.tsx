@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import '../../static/styles/main.scss'
-import axios from 'axios'
+//import axios from 'axios'
 import moment from 'moment'
 import Link from 'next/link'
 
@@ -18,18 +18,40 @@ export default () => {
   const [documents,setDocuments] =useState(null)
   const [tabActive, setTabActive] = useState<TabActive>(TabActive.processed)
   const [documentsInProces, setDocumentsInProcess] = useState(null)
+  const [lastUpdate, setLastUpdate] = useState<number>(null)
 
   const tabSelectedStyle = 'bg-indigo-500 px-8 py-2 rounded-lg text-sm font-semibold text-white hover:bg-indigo-700'
   const tabNotSelectedStyle='border border-indigo-500 px-8 py-2 rounded-lg text-sm font-semibold text-indigo-500 hover:border-indigo-700 hover:text-indigo-700'
   
   useEffect(() => {
+    /*
     axios.get("https://us-central1-tcloud-261610.cloudfunctions.net/getMeta")
       .then( docs => {
         setDocuments(docs.data.docs)
         axios.get('https://us-central1-tcloud-261610.cloudfunctions.net/getDocumentsPendingToProcess ')
           .then( docs => setDocumentsInProcess(docs.data.docs))
-      })
+      })*/
 
+
+      var myWorker = new Worker("/worker.js");
+
+      myWorker.onmessage = function (oEvent) {
+        console.log(oEvent.data)
+        setLastUpdate(oEvent.data.runAt)
+        switch(oEvent.data.type) {
+          case 'DOCUMENT_PROCESSED_LIST':
+              setDocuments(oEvent.data.value.docs)
+          case 'DOCUMENT_IN PROGRESS_LIST':
+              setDocumentsInProcess(oEvent.data.value.docs)
+          default: 
+            return 
+        }
+        console.log(oEvent.data);
+      };
+
+      myWorker.postMessage({
+        type: 'INIT'
+      });
   }, [])
 
 
@@ -44,10 +66,13 @@ export default () => {
       </header>
 
       <article className="h-screen bg-gray-200 shadow">
-        <div className="mx-4 flex items-center m-auto pt-4">
+        <div className="mx-4 flex items-center m-auto pt-4 relative">
           <button className={`${tabActive === TabActive.processed ? tabSelectedStyle : tabNotSelectedStyle}`} onClick={ () => setTabActive(TabActive.processed)}>Procesados</button>
           <button className={`ml-4 ${tabActive === TabActive.pending ? tabSelectedStyle : tabNotSelectedStyle}`}  onClick={ () => setTabActive(TabActive.pending)}>En Proceso</button>
           <button className={`ml-4 ${tabActive === TabActive.withError ? tabSelectedStyle : tabNotSelectedStyle}`}   onClick={ () => setTabActive(TabActive.withError)}>Con Errores</button>
+          <div className="absolute right-0">
+              <label className='text-gray-500 text-base text-xs font-thin' >Ultima Actualización {moment(lastUpdate).format('h:mm:ssA')}</label>
+          </div>
         </div>
 
 
@@ -110,7 +135,7 @@ export default () => {
             
           </header>
           {documentsInProces.filter( d => d.status === 'PENDING').map( docPending => ( 
-            <div className="flex bg-white mx-4 h-12 items-center mt-4 rounded-lg hover:bg-yellow-200 hover:shadow" key={docPending.document_id}>
+            <div className="flex bg-white mx-4 h-12 items-center mt-4 rounded-lg hover:bg-yellow-200 hover:shadow" key={docPending.job_id}>
               <div className="w-2/3 pl-4">
                 <span className="text-gray-700 font-semibold text-sm">{docPending.reference}</span>
               </div>
@@ -145,7 +170,7 @@ export default () => {
             
           </header>
           {documentsInProces.filter( d => d.status === 'FAIL').map( docError => ( 
-          <div className="flex bg-white mx-4 mim-h-12 items-center mt-4 rounded-lg hover:bg-red-100 hover:shadow"  key={docError.document_id}>
+          <div className="flex bg-white mx-4 mim-h-12 items-center mt-4 rounded-lg hover:bg-red-100 hover:shadow"  key={docError.job_id}>
             <div className="w-2/3 pl-4">
               <span className="text-gray-700 font-semibold text-sm">{docError.reference}</span>
             </div>
@@ -184,7 +209,7 @@ export default () => {
 
 const IconDownload = () => (
   <svg width="26" height="20" viewBox="0 0 26 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M24.4843 13V17C24.4843 17.5304 24.212 18.0391 23.7273 18.4142C23.2427 18.7893 22.5853 19 21.8998 19H3.80859C3.12314 19 2.46577 18.7893 1.98109 18.4142C1.49641 18.0391 1.22412 17.5304 1.22412 17V13" stroke="#667EEA" strokeWidth="2" stroke-linecap="round" strokeLinejoin="round" />
+    <path d="M24.4843 13V17C24.4843 17.5304 24.212 18.0391 23.7273 18.4142C23.2427 18.7893 22.5853 19 21.8998 19H3.80859C3.12314 19 2.46577 18.7893 1.98109 18.4142C1.49641 18.0391 1.22412 17.5304 1.22412 17V13" stroke="#667EEA" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     <path d="M6.39331 8L12.8545 13L19.3156 8" stroke="#667EEA" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     <path d="M12.8542 13V1" stroke="#667EEA" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
