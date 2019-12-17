@@ -3,6 +3,8 @@ import '../../static/styles/main.scss'
 //import axios from 'axios'
 import moment from 'moment'
 import Link from 'next/link'
+import {extractTextFromEntity} from '../../service/index'
+import lunr from 'lunr'
 
 enum TabActive {
   processed="PROCESSED",
@@ -10,43 +12,67 @@ enum TabActive {
   withError = "WITHERROR"
 }
 
+interface Document {
+  document_id? : string 
+  job_id? : string 
+  reference:  string 
+  status: string
+  processed_at: number
+  upload_date : number
+  info: string
+}
 
 const FORMAT_DATETIME= "DD-MM-YYYY hh:mm:ss A"
+
+let idxProcessed = null
+let idxInProgress = null
+
 
 export default () => {
 
   const [documents,setDocuments] =useState(null)
   const [tabActive, setTabActive] = useState<TabActive>(TabActive.processed)
-  const [documentsInProces, setDocumentsInProcess] = useState(null)
+  const [documentsInProcess, setDocumentsInProcess] = useState(null)
   const [lastUpdate, setLastUpdate] = useState<number>(null)
+  const [textToSearch, setTextToSearch] = useState(null)
 
   const tabSelectedStyle = 'bg-indigo-500 px-8 py-2 rounded-lg text-sm font-semibold text-white hover:bg-indigo-700'
   const tabNotSelectedStyle='border border-indigo-500 px-8 py-2 rounded-lg text-sm font-semibold text-indigo-500 hover:border-indigo-700 hover:text-indigo-700'
   
   useEffect(() => {
-    /*
-    axios.get("https://us-central1-tcloud-261610.cloudfunctions.net/getMeta")
-      .then( docs => {
-        setDocuments(docs.data.docs)
-        axios.get('https://us-central1-tcloud-261610.cloudfunctions.net/getDocumentsPendingToProcess ')
-          .then( docs => setDocumentsInProcess(docs.data.docs))
-      })*/
-
-
       var myWorker = new Worker("/worker.js");
 
       myWorker.onmessage = function (oEvent) {
-        console.log(oEvent.data)
         setLastUpdate(oEvent.data.runAt)
         switch(oEvent.data.type) {
           case 'DOCUMENT_PROCESSED_LIST':
-              setDocuments(oEvent.data.value.docs)
+              const temporalResult = oEvent.data.value.docs
+              temporalResult.map( (d, index) => {     
+                temporalResult[index].rawText = d.entities.map( (e:LNEntity) => extractTextFromEntity(e)).join(' ')
+              })
+              idxProcessed = lunr( function(){
+                this.ref('document_id')
+                this.field('rawText')
+                this.field('reference')
+                temporalResult.forEach( e => {
+                  this.add(e)
+                })
+              });            
+              setDocuments(temporalResult)
+              break
           case 'DOCUMENT_IN PROGRESS_LIST':
+              idxInProgress = lunr( function(){
+                this.ref('job_id')
+                this.field('reference')
+                oEvent.data.value.docs.forEach( e => {
+                  this.add(e)
+                })
+              });       
               setDocumentsInProcess(oEvent.data.value.docs)
+              break
           default: 
             return 
         }
-        console.log(oEvent.data);
       };
 
       myWorker.postMessage({
@@ -54,22 +80,65 @@ export default () => {
       });
   }, [])
 
+  
+
+  const filterDocuments = () : Array<Document>=> {
+    let repository : Array<Document> = [] 
+    switch(tabActive) {
+      case TabActive.processed:
+        repository = documents && textToSearch ? documents.map( doc => idxProcessed.search(`${textToSearch}*`).filter( f => f.ref === doc.document_id)[0] ? doc : null).filter( element => element != null) : documents 
+        break
+      case TabActive.withError:
+        repository =   documentsInProcess && textToSearch ?  documentsInProcess.map( doc => idxInProgress.search(`${textToSearch}*`).filter( f => f.ref === doc.job_id)[0] ? doc : null).filter( element => element != null) : documentsInProcess
+        break
+      case TabActive.pending:
+          repository = documentsInProcess && textToSearch  ?  documentsInProcess.map( doc => idxInProgress.search(`${textToSearch}*`).filter( f => f.ref === doc.job_id)[0] ? doc : null).filter( element => element != null) : documentsInProcess
+          break
+      default: 
+        repository = []
+    }
+
+    if (textToSearch)  {
+      if (tabActive === TabActive.processed)
+        return  repository.map( doc => idxProcessed.search(`${textToSearch}*`).filter( f => f.ref === doc.document_id)[0] ? doc : null).filter( element => element != null)
+      else
+        return  repository.map( doc => idxInProgress.search(`${textToSearch}*`).filter( f => f.ref === doc.job_id)[0] ? doc : null).filter( element => element != null)
+    }
+      
+    
+    //console.log(repository, textToSearch, tabActive)
+
+    return repository
+
+    
+  }
 
   if (!documents) return <div>Cargando</div>
 
-  // console.log(tabActive)
+
 
   return (<div className="flex">
     <main className="w-full clearfix ">
+
       <header className="h-16 flex items-center">
-        <input max="320" className="bg-gray-300 focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg mx-4 py-2 px-4 block w-1/3 appearance-none leading-normal" placeholder="¿Qué documento desea buscar?" />
+        <div className="bg-gray-300 flex items-center focus:shadow-outline border border-gray-300 rounded-lg   mx-4 py-2 px-4 block w-1/3">
+        <div><IconSearch/></div>
+        <input 
+          value={textToSearch ? textToSearch : ''}
+          onChange={ (e) => {
+            setTextToSearch(e.target.value)
+          }}
+          max="320" 
+          className="focus:outline-none bg-gray-300 mx-4 w-full  appearance-none leading-normal" 
+          placeholder="¿Qué documento desea buscar?" />
+        </div>
       </header>
 
       <article className="h-screen bg-gray-200 shadow">
         <div className="mx-4 flex items-center m-auto pt-4 relative">
-          <button className={`${tabActive === TabActive.processed ? tabSelectedStyle : tabNotSelectedStyle}`} onClick={ () => setTabActive(TabActive.processed)}>Procesados</button>
-          <button className={`ml-4 ${tabActive === TabActive.pending ? tabSelectedStyle : tabNotSelectedStyle}`}  onClick={ () => setTabActive(TabActive.pending)}>En Proceso</button>
-          <button className={`ml-4 ${tabActive === TabActive.withError ? tabSelectedStyle : tabNotSelectedStyle}`}   onClick={ () => setTabActive(TabActive.withError)}>Con Errores</button>
+          <button className={`focus:outline-none  ${tabActive === TabActive.processed ? tabSelectedStyle : tabNotSelectedStyle}`} onClick={ () => setTabActive(TabActive.processed)}>Procesados</button>
+          <button className={`ml-4 focus:outline-none  ${tabActive === TabActive.pending ? tabSelectedStyle : tabNotSelectedStyle}`}  onClick={ () => setTabActive(TabActive.pending)}>En Proceso</button>
+          <button className={`ml-4 focus:outline-none  ${tabActive === TabActive.withError ? tabSelectedStyle : tabNotSelectedStyle}`}   onClick={ () => setTabActive(TabActive.withError)}>Con Errores</button>
           <div className="absolute right-0">
               <label className='text-gray-500 text-base text-xs font-thin' >Ultima Actualización {moment(lastUpdate).format('h:mm:ssA')}</label>
           </div>
@@ -95,7 +164,8 @@ export default () => {
           </div>
         </header>
 
-        {documents.map( d => (
+        { filterDocuments()
+              .map( d => (
           <div className="flex bg-white mx-4 h-12 items-center mt-4 rounded-lg hover:bg-green-200 hover:shadow" key={d.document_id}>
             <div className="w-2/3 pl-4">
               <Link href={`/v?documentId=${d.document_id}`}>
@@ -134,7 +204,7 @@ export default () => {
             </div>
             
           </header>
-          {documentsInProces.filter( d => d.status === 'PENDING').map( docPending => ( 
+          {filterDocuments().filter( d => d.status === 'PENDING').map( docPending => ( 
             <div className="flex bg-white mx-4 h-12 items-center mt-4 rounded-lg hover:bg-yellow-200 hover:shadow" key={docPending.job_id}>
               <div className="w-2/3 pl-4">
                 <span className="text-gray-700 font-semibold text-sm">{docPending.reference}</span>
@@ -169,7 +239,7 @@ export default () => {
             </div>
             
           </header>
-          {documentsInProces.filter( d => d.status === 'FAIL').map( docError => ( 
+          {filterDocuments().filter( d => d.status === 'FAIL').map( docError => ( 
           <div className="flex bg-white mx-4 mim-h-12 items-center mt-4 rounded-lg hover:bg-red-100 hover:shadow"  key={docError.job_id}>
             <div className="w-2/3 pl-4">
               <span className="text-gray-700 font-semibold text-sm">{docError.reference}</span>
@@ -199,7 +269,7 @@ export default () => {
     <aside className="w-16 ">
       <div className="h-8 w-8 mt-4 bg-indigo-100 m-auto flex items-center rounded-lg"><IconPeople /></div>
       <div className="h-8 w-8 mt-4 bg-indigo-100 m-auto flex items-center rounded-lg"><IconNotification /></div>
-      <div className="h-8 w-8 mt-4 bg-indigo-100 m-auto flex items-center rounded-lg"><IconDocument /></div>
+      
     </aside>
 
   </div>
@@ -240,26 +310,23 @@ const IconPeople = () => (
     </g>
   </svg>)
 
-const IconDocument = () => (
-  <svg style={{ margin: 'auto' }} width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <g id="Icon/Outline/file-text">
-      <path id="Mask" fillRule="evenodd" clipRule="evenodd" d="M8.00011 9.3335H6.00011C5.63211 9.3335 5.33344 9.03483 5.33344 8.66683C5.33344 8.29883 5.63211 8.00016 6.00011 8.00016H8.00011C8.36811 8.00016 8.66677 8.29883 8.66677 8.66683C8.66677 9.03483 8.36811 9.3335 8.00011 9.3335ZM6.00011 10.6668H10.0001C10.3688 10.6668 10.6668 10.9655 10.6668 11.3335C10.6668 11.7015 10.3688 12.0002 10.0001 12.0002H6.00011C5.63211 12.0002 5.33344 11.7015 5.33344 11.3335C5.33344 10.9655 5.63211 10.6668 6.00011 10.6668ZM11.6297 13.3335H4.37033C4.16633 13.3335 4.00033 13.1842 4.00033 13.0002V3.00016C4.00033 2.81616 4.16633 2.66683 4.37033 2.66683H8.00033V4.76683C8.00033 5.81483 8.81166 6.66683 9.80966 6.66683H12.0003V13.0002C12.0003 13.1842 11.8343 13.3335 11.6297 13.3335V13.3335ZM9.33366 3.31883L11.1617 5.3335H9.80966C9.54699 5.3335 9.33366 5.0795 9.33366 4.76683V3.31883ZM13.1603 5.55216L9.53099 1.55216C9.40432 1.41283 9.22566 1.3335 9.03699 1.3335H4.37033C3.43099 1.3335 2.66699 2.0815 2.66699 3.00016V13.0002C2.66699 13.9188 3.43099 14.6668 4.37033 14.6668H11.6297C12.569 14.6668 13.3337 13.9188 13.3337 13.0002V6.00016C13.3337 5.83416 13.2717 5.67483 13.1603 5.55216V5.55216Z" fill="#231F20" />
-      <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="2" y="1" width="12" height="14">
-        <path id="Mask_2" fillRule="evenodd" clipRule="evenodd" d="M8.00011 9.3335H6.00011C5.63211 9.3335 5.33344 9.03483 5.33344 8.66683C5.33344 8.29883 5.63211 8.00016 6.00011 8.00016H8.00011C8.36811 8.00016 8.66677 8.29883 8.66677 8.66683C8.66677 9.03483 8.36811 9.3335 8.00011 9.3335ZM6.00011 10.6668H10.0001C10.3688 10.6668 10.6668 10.9655 10.6668 11.3335C10.6668 11.7015 10.3688 12.0002 10.0001 12.0002H6.00011C5.63211 12.0002 5.33344 11.7015 5.33344 11.3335C5.33344 10.9655 5.63211 10.6668 6.00011 10.6668ZM11.6297 13.3335H4.37033C4.16633 13.3335 4.00033 13.1842 4.00033 13.0002V3.00016C4.00033 2.81616 4.16633 2.66683 4.37033 2.66683H8.00033V4.76683C8.00033 5.81483 8.81166 6.66683 9.80966 6.66683H12.0003V13.0002C12.0003 13.1842 11.8343 13.3335 11.6297 13.3335V13.3335ZM9.33366 3.31883L11.1617 5.3335H9.80966C9.54699 5.3335 9.33366 5.0795 9.33366 4.76683V3.31883ZM13.1603 5.55216L9.53099 1.55216C9.40432 1.41283 9.22566 1.3335 9.03699 1.3335H4.37033C3.43099 1.3335 2.66699 2.0815 2.66699 3.00016V13.0002C2.66699 13.9188 3.43099 14.6668 4.37033 14.6668H11.6297C12.569 14.6668 13.3337 13.9188 13.3337 13.0002V6.00016C13.3337 5.83416 13.2717 5.67483 13.1603 5.55216V5.55216Z" fill="white" />
-      </mask>
-      <g mask="url(#mask0)">
-        <g id="&#240;&#159;&#142;&#168; Color">
-          <rect id="Base" width="16" height="16" fill="#5E81F4" />
-        </g>
-      </g>
-    </g>
-  </svg>
-
-)
 
 const IconAdd = () => (
   <svg style={{ margin: 'auto' }} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path fillRule="evenodd" clipRule="evenodd" d="M19 11H13V5H11V11H5V13H11V19H13V13H19V11V11Z" fill="white" />
+  </svg>
+
+)
+
+const IconSearch =  () => (
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fillRule="evenodd" clipRule="evenodd" d="M3.75 8.25C3.75 5.76825 5.76825 3.75 8.25 3.75C10.7317 3.75 12.75 5.76825 12.75 8.25C12.75 10.7317 10.7317 12.75 8.25 12.75C5.76825 12.75 3.75 10.7317 3.75 8.25ZM15.5302 14.4697L12.984 11.9228C13.7737 10.9073 14.25 9.6345 14.25 8.25C14.25 4.94175 11.5582 2.25 8.25 2.25C4.94175 2.25 2.25 4.94175 2.25 8.25C2.25 11.5582 4.94175 14.25 8.25 14.25C9.6345 14.25 10.9072 13.7738 11.9227 12.984L14.4697 15.5303C14.616 15.6765 14.808 15.75 15 15.75C15.192 15.75 15.384 15.6765 15.5302 15.5303C15.8235 15.237 15.8235 14.763 15.5302 14.4697Z" fill="#718096"/>
+    <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="2" y="2" width="14" height="14">
+    <path fillRule="evenodd" clipRule="evenodd" d="M3.75 8.25C3.75 5.76825 5.76825 3.75 8.25 3.75C10.7317 3.75 12.75 5.76825 12.75 8.25C12.75 10.7317 10.7317 12.75 8.25 12.75C5.76825 12.75 3.75 10.7317 3.75 8.25ZM15.5302 14.4697L12.984 11.9228C13.7737 10.9073 14.25 9.6345 14.25 8.25C14.25 4.94175 11.5582 2.25 8.25 2.25C4.94175 2.25 2.25 4.94175 2.25 8.25C2.25 11.5582 4.94175 14.25 8.25 14.25C9.6345 14.25 10.9072 13.7738 11.9227 12.984L14.4697 15.5303C14.616 15.6765 14.808 15.75 15 15.75C15.192 15.75 15.384 15.6765 15.5302 15.5303C15.8235 15.237 15.8235 14.763 15.5302 14.4697Z" fill="white"/>
+    </mask>
+    <g mask="url(#mask0)">
+    <rect width="18" height="18" fill="#718096"/>
+    </g>
   </svg>
 
 )
