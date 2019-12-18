@@ -5,7 +5,7 @@ import RightSideBar from '../../components/layout/rigth_side_bar';
 import SkinnyRigthSideBar  from '../../components/layout/skinny_right_side_bar'
 import DocumentArea from '../../components/layout/document_area';
 import InfoCard from '../../components/info_card';
-
+import Loading from '../../components/loading'
 import TagsCard from '../../components/tags_card';
 import EntityCardDetail from '../../components/entity_card_detail';
 
@@ -44,7 +44,7 @@ export default () => {
 
 
   if (!document)
-    return <div>Cargando</div>
+    return <Loading/>
 
   return (
     <div className="bg-gray-100" >

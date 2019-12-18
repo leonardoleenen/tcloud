@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import '../../static/styles/main.scss'
-//import axios from 'axios'
 import moment from 'moment'
 import Link from 'next/link'
 import {extractTextFromEntity} from '../../service/index'
 import lunr from 'lunr'
+import Loading from '../../components/loading'
 
 enum TabActive {
   processed="PROCESSED",
@@ -110,9 +110,7 @@ export default () => {
     
   }
 
-  if (!documents) return <div>Cargando</div>
-
-
+  if (!documents) return <div><Loading/></div>
 
   return (<div className="flex">
     <main className="w-full clearfix ">
