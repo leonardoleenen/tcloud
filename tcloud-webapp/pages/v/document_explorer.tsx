@@ -104,9 +104,6 @@ export default () => {
       else
         return  repository.map( doc => idxInProgress.search(`${textToSearch}*`).filter( f => f.ref === doc.job_id)[0] ? doc : null).filter( element => element != null)
     }
-      
-    
-    //console.log(repository, textToSearch, tabActive)
 
     return repository
 
@@ -153,11 +150,11 @@ export default () => {
           <div className="w-2/3">
             <span className="text-gray-500 font-semibold text-sm">Identificador</span>
           </div>
-          <div className="w-32">
-            <span className="text-gray-500 font-semibold text-sm">Estado</span>
-          </div>
           <div className="w-64">
             < span className="text-gray-500 font-semibold text-sm">Fecha de subida</span>
+          </div>
+          <div className="w-32">
+            < span className="text-gray-500 font-semibold text-sm">T. P</span>
           </div>
           <div className="w-32">
             <span className="text-gray-500 font-semibold text-sm">Descarga</span>
@@ -172,11 +169,11 @@ export default () => {
                 <span className="text-gray-700 font-semibold text-sm">{d.reference}</span>
               </Link>
             </div>
-            <div className="w-32">
-              <span className="text-gray-500 font-semibold text-sm">{d.status === 'SUCCESS' ? 'Procesado' : 'Falló'}</span>
-            </div>
             <div className="w-64">
               <span className="text-gray-700 font-semibold text-sm">{moment(d.processed_at).format(FORMAT_DATETIME)}</span>
+            </div>
+            <div className="w-32">
+              <span className="text-gray-700 font-semibold text-sm">{ moment(moment(d.processed_at).diff(moment(d.upload_date))).format("mm:ss")}</span>
             </div>
             <div className="w-32">
               <span className="text-gray-800 font-semibold text-sm"><IconDownload /></span>
