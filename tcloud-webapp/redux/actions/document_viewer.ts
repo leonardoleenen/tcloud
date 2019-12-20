@@ -1,5 +1,5 @@
 
-import {LOAD_DOCUMENT, UPDATE_ENTITY_DETAIL_LIST, CLEAN_DOCUMENT, initState, SHOW_LEFT_PANEL, HIDE_LEFT_PANEL,SHOW_RIGHT_PANEL,HIDE_RIGHT_PANEL} from '../reducers/document_viewer';
+import {LOAD_DOCUMENT, UPDATE_ENTITY_DETAIL_LIST, CLEAN_DOCUMENT, initState, SHOW_LEFT_PANEL, HIDE_LEFT_PANEL,SHOW_RIGHT_PANEL,HIDE_RIGHT_PANEL, SET_TAG_POS} from '../reducers/document_viewer';
 import {sortImages} from '../../service'
 
 
@@ -78,6 +78,23 @@ export const hideRightPanel = () => {
   return (dispatch) => {
     return dispatch({
       type: HIDE_RIGHT_PANEL
+    })
+  }
+}
+
+export const setPosSelected = (pos : string ) => {
+  return (dispatch) => {
+    return dispatch({
+      type: SET_TAG_POS,
+      pos_selected: pos
+    })
+  }
+}
+
+export const unSetPosSelected = () => {
+  return (dispatch) => {
+    return dispatch({
+      type: SET_TAG_POS
     })
   }
 }

@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import uuid4 from 'uuid4'
 import Clipboard from 'react-clipboard.js';
+import {setPosSelected} from '../redux/actions/document_viewer'
+import {useDispatch} from 'react-redux'
 
 interface Props {
   entity: LNEntity
@@ -9,17 +11,24 @@ interface Props {
 
 const renderRows = (isExpanded, e: LNEntity) => {
   const [entitySelected, setEntitySelected] = useState<LNEntity>(null)
+  const dispatch = useDispatch()
 
   if (!isExpanded)
     return
 
   return (
     <div ><ul className='renderRowsItem flex hover:bg-gray-200 justify-between relative' onMouseOver={ () => setEntitySelected(e)} onMouseLeave={ () => setEntitySelected(null)}>
-      <a href={`#${e.pos && e.pos.length > 0 ? e.pos[0].page.toString() + e.pos[0].line.toString() : '#'}`}>
+      <a href={`#${e.pos && e.pos.length > 0 ? e.pos[0].page.toString() + e.pos[0].line.toString() : '#'}`} onClick={ () => dispatch(setPosSelected(e.pos[0].page.toString() + e.pos[0].line.toString()))}>
         <li key={uuid4()} className='text-sm text-gray-600'>{e.text}</li>
       </a>
 
-      {entitySelected  && entitySelected.text === e.text ? <div className="flex items-center absolute right-0 top-0"> <Clipboard className="mr-1 cursor-pointer" data-clipboard-text={e.text}><CopyIcon /></Clipboard> <EditIcon /> </div>: ''}
+      {entitySelected  && entitySelected.text === e.text ? 
+        <div className="flex items-center absolute right-0 top-0"  > 
+          <Clipboard className="mr-1 cursor-pointer" data-clipboard-text={e.text}>
+            <CopyIcon />
+          </Clipboard> 
+          <EditIcon />
+        </div>: ''}
       
 
     </ul>
@@ -59,13 +68,12 @@ const renderRows = (isExpanded, e: LNEntity) => {
 }
 
 const EntityCardDetail = (props: Props) => {
-
+  
   const [isExpanded, collapase] = useState(true)
   return <div className="bg-white rounded-lg mainContainer py-6 px-4 mt-5 entity-card">
     <header className=" flex">
       <label className="text-base font-semibold text-gray-800 mb-4 w-11/12" >{props.entity.display_name}</label>
       <div onClick={() => {
-        console.log(isExpanded)
         collapase(!isExpanded)
       }} className='cursor-pointer expandIcon bg-gray-200 rounded justify-end w-5 h-5 flex content-center justify-center'>{isExpanded ? <CollapseIcon /> : <ExpandIcon />}</div>
     </header>

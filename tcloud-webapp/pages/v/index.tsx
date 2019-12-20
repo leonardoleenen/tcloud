@@ -31,10 +31,8 @@ export default () => {
       const d = await dataProvider.getDocument(documentId as string)
       dispatch(loadDocument(d.data))
     }
-
     if (documentId)
       fetchData()
-
   }, [])
 
 
@@ -43,8 +41,7 @@ export default () => {
   const entityDetailList = useSelector(state => state.documentViewer.entity_detail_list)
 
 
-  if (!document)
-    return <Loading/>
+  if (!document) return <Loading/>
 
   return (
     <div className="bg-gray-100" >

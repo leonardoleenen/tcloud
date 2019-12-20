@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import {setPosSelected, unSetPosSelected} from  '../redux/actions/document_viewer'
+import {useDispatch} from 'react-redux'
 
 interface Props {
   value: string
@@ -11,18 +13,26 @@ interface Props {
 export default (prop: Props) => {
 
   const [toogled, setToggled] = useState(false)
+  const dispatch = useDispatch()
 
   return <div className={`button border rounded-full border-${prop.color}-700 w-auto  ${toogled ? 'text-white bg-' + prop.color + '-500' : 'text-' + prop.color + '-500  bg-white'}`} onClick={() => {
     setToggled(!toogled)
     prop.callBackFunc(prop.entity)
+    let pos = null 
+
+    if (prop.entity.values) 
+      pos = prop.entity.values[0]['entities'][0]['pos'][0]
+    else 
+      pos = prop.entity.pos ? prop.entity.pos[0] : null 
+
     if (!toogled){
-      if (prop.entity.values) {
-        const pos = prop.entity.values[0]['entities'][0]['pos'][0]
-        window.location.href=`#${pos.page.toString() + pos.line.toString() }`
-      }else {
-        window.location.href=`#${prop.entity.pos ? prop.entity.pos[0].page.toString() + prop.entity.pos[0].line.toString() : '#'}`
-      }
+      pos ? dispatch(setPosSelected(pos.page.toString() + pos.line.toString())) : null 
+      window.location.href=`#${pos ? pos.page.toString() + pos.line.toString() : '#'}`
+    }else {
+      pos ? dispatch(unSetPosSelected()) : null 
     }
+
+   
       
   }}>
     <div className={`textAvatar rounded-full bg-${prop.color}-700 text-sm text-white flex items-center justify-center `}>{prop.value.trim().split(" ").map(a => a[0].toUpperCase()).join("")}</div>
