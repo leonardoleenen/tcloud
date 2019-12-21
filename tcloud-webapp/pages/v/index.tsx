@@ -15,7 +15,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { dataProvider } from '../../service/index';
 
 
-import { loadDocument, showLeftPanel, hideLeftPanel } from '../../redux/actions/document_viewer';
+import { loadDocument, showLeftPanel, hideLeftPanel, cleanDocument } from '../../redux/actions/document_viewer';
 
 import '../../static/styles/main.scss';
 
@@ -27,6 +27,7 @@ export default () => {
   const leftPanelIsOpen = useSelector(state => state.settings.leftPanelIsOpen)
   const rightPanelIsOpen = useSelector(state => state.settings.rightPanelIsOpen)
   useEffect(() => {
+    dispatch(cleanDocument())
     const fetchData = async () => {
       const d = await dataProvider.getDocument(documentId as string)
       dispatch(loadDocument(d.data))
